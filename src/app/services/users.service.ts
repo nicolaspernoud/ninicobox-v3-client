@@ -4,18 +4,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { User } from '../../../../common/interfaces';
+import { User } from '../interfaces';
 import { handleHTTPError } from '../utility_functions';
 
 @Injectable()
 export class UsersService {
 
-  private endpoint = `${environment.apiEndPoint}/secured/admin/users`;
-  private tokenEndpoint = `${environment.apiEndPoint}/secured/admin/getproxytoken`;
+  private endpoint = `${environment.apiEndPoint}/admin/users`;
+  private tokenEndpoint = `${environment.apiEndPoint}/admin/getproxytoken`;
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) {}
 
   getUsers(): Observable<User[]> {
     return this.http

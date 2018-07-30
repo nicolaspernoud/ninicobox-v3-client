@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
-import { User } from '../../../../../common/interfaces';
+import { User } from '../../interfaces';
 import { $ } from 'protractor';
 import { switchMap } from 'rxjs/operators';
 import { appAnimations } from '../../animations';

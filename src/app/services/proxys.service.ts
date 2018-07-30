@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { SafeResourceUrl } from '@angular/platform-browser/src/security/dom_sanitization_service';
-import { TokenResponse, Proxy } from '../../../../common/interfaces';
+import { Proxy } from '../interfaces';
 import { handleHTTPError } from '../utility_functions';
 
 @Injectable()
@@ -17,9 +17,9 @@ export class ProxysService {
 
   constructor(private http: HttpClient) { }
 
-  getProxyToken(): Observable<TokenResponse> {
+  getProxyToken(): Observable<string> {
     return this.http
-      .get<TokenResponse>(this.tokenEndpoint).pipe(
+      .get(this.tokenEndpoint, { responseType: 'text' }).pipe(
       catchError(handleHTTPError));
   }
 

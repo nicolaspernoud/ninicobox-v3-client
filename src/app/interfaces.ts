@@ -6,16 +6,12 @@ export interface Proxy {
     rank?: number;
 }
 
-export interface FilesAC {
+export interface FilesACL {
     name: string;
-    basepath: string;
+    path: string;
     roles: string[];
     permissions: string;
-}
-
-export interface TokenResponse {
-    message: string;
-    token: string;
+    currentPath?: string;
 }
 
 export interface User {

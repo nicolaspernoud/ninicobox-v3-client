@@ -3,7 +3,7 @@ import { ExplorerComponent } from './explorer.component';
 import { MaterialModule } from '../../../material.module';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { FilesService } from '../../../services/files.service';
-import { File } from '../../../../../../common/interfaces';
+import { File } from '../../../interfaces';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';

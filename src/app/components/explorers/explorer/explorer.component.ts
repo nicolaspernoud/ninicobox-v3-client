@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { FilesService, } from '../../../services/files.service';
 import { environment } from '../../../../environments/environment';
-import { File } from '../../../../../../common/interfaces';
+import { File } from '../../../interfaces';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { RenameDialogComponent } from './rename-dialog/rename-dialog.component';
 import { switchMap } from 'rxjs/operators';
@@ -36,7 +36,7 @@ export class ExplorerComponent implements OnInit {
     }
 
     private exploreCurrentDirectory(): Subscribable<File[]> {
-        return this.fileService.explore(this.permissions, this.basePath, this.currentPath);
+        return this.fileService.explore(this.basePath, this.currentPath);
     }
 
     private displayFiles(action?: string): (value: File[]) => void {
@@ -69,10 +69,10 @@ export class ExplorerComponent implements OnInit {
             variant++;
         }
         if (isDir) {
-            this.fileService.createDir(this.permissions, this.basePath, this.currentPath, newFileName)
+            this.fileService.createDir(this.basePath, this.currentPath, newFileName)
                 .pipe(switchMap(data => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
         } else {
-            this.fileService.setContent(this.permissions, this.basePath, this.currentPath + newFileName, '')
+            this.fileService.setContent(this.basePath, this.currentPath + newFileName, '')
                 .pipe(switchMap(data => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
         }
     }
@@ -96,7 +96,7 @@ export class ExplorerComponent implements OnInit {
         dialogRef.afterClosed().subscribe(fileAfterRename => {
             if (fileAfterRename && fileAfterRename.name) {
                 const newPath = `${this.currentPath}/${fileAfterRename.name}`;
-                this.fileService.renameOrCopy(this.permissions, this.basePath, file.path, newPath, false)
+                this.fileService.renameOrCopy(this.basePath, file.path, newPath, false)
                     .pipe(switchMap(data => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
             }
         });
@@ -105,7 +105,7 @@ export class ExplorerComponent implements OnInit {
     open(file: File, editMode: boolean) {
         const fileType = this.getType(file);
         if (fileType === 'text') {
-            this.fileService.getContent(this.permissions, this.basePath, file.path).subscribe(data => {
+            this.fileService.getContent(this.basePath, file.path).subscribe(data => {
                 const dialogRef = this.dialog.open(OpenComponent, {
                     data: {
                         content: data,
@@ -117,16 +117,16 @@ export class ExplorerComponent implements OnInit {
                 if (editMode) {
                     dialogRef.afterClosed().subscribe(newContent => {
                         if (newContent) {
-                            this.fileService.setContent(this.permissions, this.basePath, file.path, newContent.content)
+                            this.fileService.setContent(this.basePath, file.path, newContent.content)
                                 .pipe(switchMap(value => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
                         }
                     });
                 }
             });
         } else if (fileType === 'audio' || fileType === 'video' || fileType === 'image' || fileType === 'other') {
-            this.fileService.getShareToken(this.permissions, this.basePath, file.path).subscribe(data => {
+            this.fileService.getShareToken(this.basePath, file.path).subscribe(data => {
                 // tslint:disable-next-line:max-line-length
-                const url = this.sanitizer.bypassSecurityTrustResourceUrl(`${environment.apiEndPoint}/secured/share/${encodeURIComponent(this.basePath)}/${encodeURIComponent(file.path)}?JWT=${data.token}&inline=true`);
+                const url = this.sanitizer.bypassSecurityTrustResourceUrl(`${environment.apiEndPoint}/secured/share/${encodeURIComponent(this.basePath)}/${encodeURIComponent(file.path)}?JWT=${data}&inline=true`);
                 const dialogRef = this.dialog.open(OpenComponent, {
                     data: {
                         url: url,
@@ -159,15 +159,15 @@ export class ExplorerComponent implements OnInit {
         const newPath = `${this.currentPath}/${this.cutCopyFile[0].name}`;
         const action = this.cutCopyFile[1] === true ? 'Copy' : 'Cut';
         this.snackBar.openFromComponent(CutCopyProgressBarComponent);
-        this.fileService.renameOrCopy(this.permissions, this.basePath, this.cutCopyFile[0].path, newPath, this.cutCopyFile[1])
+        this.fileService.renameOrCopy(this.basePath, this.cutCopyFile[0].path, newPath, this.cutCopyFile[1])
             .pipe(switchMap(data => this.exploreCurrentDirectory())).subscribe(this.displayFiles(action));
         this.cutCopyFile = undefined;
     }
 
     download(file: File, share: boolean) {
-        this.fileService.getShareToken(this.permissions, this.basePath, file.path).subscribe(data => {
+        this.fileService.getShareToken(this.basePath, file.path).subscribe(data => {
             // tslint:disable-next-line:max-line-length
-            const shareURL = `${environment.apiEndPoint}/secured/share/${encodeURIComponent(this.basePath)}/${encodeURIComponent(file.path)}?JWT=${data.token}`;
+            const shareURL = `${environment.apiEndPoint}/secured/share/${encodeURIComponent(this.basePath)}/${encodeURIComponent(file.path)}?JWT=${data}`;
             if (share) {
                 this.dialog.open(BasicDialogComponent, {
                     data: {
@@ -191,7 +191,7 @@ export class ExplorerComponent implements OnInit {
         const dialogRef = this.dialog.open(ConfirmDialogComponent);
         dialogRef.afterClosed().subscribe(confirmed => {
             if (confirmed) {
-                this.fileService.delete(this.permissions, this.basePath, file.path, file.isDir)
+                this.fileService.delete(this.basePath, file.path, file.isDir)
                     .pipe(switchMap(data => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
             }
         });

@@ -17,7 +17,7 @@ export class TokenInterceptor implements HttpInterceptor {
         if (isRequestToBackend && authService.hasToken()) {
             request = request.clone({
                 setHeaders: {
-                    Authorization: `JWT ${authService.getToken()}`
+                    Authorization: `Bearer ${authService.getToken()}`
                 }
             });
         }

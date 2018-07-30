@@ -1,35 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { ExplorerComponent } from './explorer/explorer.component';
-import { FilesaclService } from '../../services/filesacl.service';
+import { FilesACLsService } from '../../services/filesacls.service';
 import { AuthService } from '../../services/auth.service';
-import { FilesAC } from '../../../../../common/interfaces';
+import { FilesACL } from '../../interfaces';
 import { appAnimations } from '../../animations';
 
 @Component({
   selector: 'app-explorers',
   templateUrl: './explorers.component.html',
   styleUrls: ['./explorers.component.css'],
-  providers: [FilesaclService],
+  providers: [FilesACLsService],
   animations: [appAnimations]
 })
 export class ExplorersComponent implements OnInit {
 
-  public filesacl: FileACFront[];
+  public filesacls: FilesACL[];
 
-  constructor(private fileACLService: FilesaclService, private authService: AuthService) { }
+  constructor(private filesACLsService: FilesACLsService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.fileACLService.getFilesACL().subscribe(data => {
-      this.filesacl = data.filter(fileac => fileac.roles.includes(this.authService.getRoleFromToken()));
+    this.filesACLsService.getFilesACLs().subscribe(data => {
+      this.filesacls = data.filter(filesacls => filesacls.roles.includes(this.authService.getRoleFromToken()));
     });
   }
 
   currentPathChanged(event: [string, string]) {
-    this.filesacl.find(value => value.name === event[0]).currentPath = event[1];
+    this.filesacls.find(value => value.name === event[0]).currentPath = event[1];
   }
 
-}
-
-interface FileACFront extends FilesAC {
-    currentPath?: string;
 }

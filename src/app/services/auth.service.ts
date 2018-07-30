@@ -4,7 +4,7 @@ import * as jwt_decode from 'jwt-decode';
 import { Observable, BehaviorSubject, timer } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { TokenResponse, Infos } from '../../../../common/interfaces';
+import { Infos } from '../interfaces';
 import { environment } from '../../environments/environment';
 import { switchMap, catchError } from 'rxjs/operators';
 import { handleHTTPError } from '../utility_functions';
@@ -84,9 +84,9 @@ export class AuthService {
 
     login(user) {
         this.loginInProgressOrLoggedSource.next(true);
-        return this.http.post<TokenResponse>(`${this.apiEndPoint}/unsecured/login`, user).subscribe(
+        return this.http.post(`${this.apiEndPoint}/login`, user, { responseType: 'text' }).subscribe(
             data => {
-                this.setToken(data.token);
+                this.setToken(data);
                 this.userRoleSubject.next(this.getRoleFromToken());
                 this.snackBar.open('Login success', 'OK', { duration: 2000 });
                 this.router.navigate(['/']);
@@ -103,7 +103,7 @@ export class AuthService {
 
     getInfos(): Observable<Infos> {
         return this.http
-            .get<Infos>(`${this.apiEndPoint}/unsecured/infos`).pipe(
+            .get<Infos>(`${this.apiEndPoint}/infos`).pipe(
                 catchError(handleHTTPError));
     }
 }

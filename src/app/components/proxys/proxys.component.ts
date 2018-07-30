@@ -24,7 +24,7 @@ export class ProxysComponent implements OnInit {
   ngOnInit() {
     this.proxysService.getProxyToken().pipe(
       switchMap(data => {
-        this.proxytoken = data.token;
+        this.proxytoken = data;
         return this.proxysService.getProxys();
       }))
       .subscribe(data => {

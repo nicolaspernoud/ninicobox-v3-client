@@ -7,7 +7,7 @@ import { UsersService } from '../../services/users.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import { User } from '../../../../../common/interfaces';
+import { User } from '../../interfaces';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;

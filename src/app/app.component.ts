@@ -3,7 +3,7 @@ import { AuthService } from './services/auth.service';
 import { UpdateService } from './services/update.service';
 import { Router } from '@angular/router';
 import { appAnimations } from './animations';
-import { Infos } from '../../../common/interfaces';
+import { Infos } from './interfaces';
 import * as packageJson from '../../package.json';
 
 @Component({

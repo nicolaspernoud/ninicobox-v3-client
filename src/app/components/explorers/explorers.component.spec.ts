@@ -7,8 +7,8 @@ import { FilesService } from '../../services/files.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { FilesaclService } from '../../services/filesacl.service';
-import { FilesAC } from '../../../../../common/interfaces';
+import { FilesACLsService } from '../../services/filesacls.service';
+import { FilesACL } from '../../interfaces';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,18 +16,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 describe('ExplorersComponent', () => {
   let component: ExplorersComponent;
   let fixture: ComponentFixture<ExplorersComponent>;
-  let filesaclService: FilesaclService;
-  const testFilesACL: FilesAC[] =
+  let filesaclService: FilesACLsService;
+  const testFilesACLs: FilesACL[] =
   [
     {
       name: 'Users Only',
-      basepath: '../data/users',
+      path: '../data/users',
       roles: ['user'],
       permissions: 'r'
     },
     {
       name: 'Admins Only RW',
-      basepath: '../data/admins',
+      path: '../data/admins',
       roles: ['admin'],
       permissions: 'rw'
     }
@@ -43,7 +43,7 @@ describe('ExplorersComponent', () => {
       imports: [
         MaterialModule, BrowserAnimationsModule
       ],
-      providers: [FilesaclService, AuthService, FilesService, HttpClient, HttpHandler, { provide: Router, useClass: MockRouter }]
+      providers: [FilesACLsService, AuthService, FilesService, HttpClient, HttpHandler, { provide: Router, useClass: MockRouter }]
     })
       .compileComponents();
   }));
@@ -51,8 +51,8 @@ describe('ExplorersComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ExplorersComponent);
     component = fixture.componentInstance;
-    filesaclService = TestBed.get(FilesaclService);
-    spyOn(filesaclService, 'getFilesACL').and.returnValue(Observable.of(testFilesACL));
+    filesaclService = TestBed.get(FilesACLsService);
+    spyOn(filesaclService, 'getFilesACLs').and.returnValue(Observable.of(testFilesACLs));
     // fixture.detectChanges();
   });
 
