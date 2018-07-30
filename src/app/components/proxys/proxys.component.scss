@@ -1,0 +1,19 @@
+:host {
+    width: 100%;
+}
+
+mat-card {
+    margin-top: 10px;
+}
+
+mat-panel-title {
+    display: flex;
+    align-items: center;
+    mat-icon {
+        margin-right: 10px;
+    }
+}
+
+iframe {
+    border-width: 0px;
+}

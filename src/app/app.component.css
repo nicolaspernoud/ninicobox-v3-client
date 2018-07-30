@@ -1,0 +1,48 @@
+.main-content {
+    padding: 20px 10px 10px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-toolbar {
+    background: #303030;
+    color: white;
+}
+
+.main-logo {
+    margin-right: 5px;
+}
+
+.flex-spacer {
+    flex: 1 1 auto;
+}
+
+mat-sidenav {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.version {
+    padding: 16px;
+    display: flex;
+    flex-direction: line;
+}
+
+.mat-nav-list .mat-list-item-focus {
+    background: none;
+}
+
+.active-link {
+    background: #0d47a1 !important;
+    color: white;
+}
+
+.mat-drawer-container {
+    background: transparent;
+}
+
+.mat-menu-item span {
+    vertical-align: middle;
+}

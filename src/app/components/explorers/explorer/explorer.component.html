@@ -1,0 +1,66 @@
+<mat-spinner *ngIf="loading" [diameter]="56"></mat-spinner>
+<mat-nav-list *ngIf="!loading">
+    <a mat-list-item *ngIf="!!currentPath" tabindex="0" (click)="goBack()">
+        <mat-icon matListIcon>arrow_back</mat-icon>
+        <h3 mat-line>..</h3>
+    </a>
+    <a mat-list-item *ngFor="let file of files" tabindex="0" (click)="file.isDir ? explore(file) : open(file, false)">
+        <mat-icon mat-list-icon *ngIf="file.isDir" [@appear]>folder</mat-icon>
+        <mat-icon mat-list-icon *ngIf="!file.isDir" [@appear]>insert_drive_file</mat-icon>
+        <mat-icon color="primary" *ngIf="cutCopyFile !== undefined && file === cutCopyFile[0] && cutCopyFile[1] === false">content_cut</mat-icon>
+        <mat-icon color="primary" *ngIf="cutCopyFile !== undefined && file === cutCopyFile[0] && cutCopyFile[1] === true">content_copy</mat-icon>
+        <h3 matLine>{{file.name}}</h3>
+        <h4 matLine *ngIf="!file.isDir">{{getInfos(file)}}</h4>
+        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()" *ngIf="permissions=='rw' || !file.isDir">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="download(file, false);">
+                <mat-icon>file_download</mat-icon>
+                <span>Download</span>
+            </button>
+            <div *appShowToRoles="['admin']">
+                <button mat-menu-item (click)="download(file, true);">
+                    <mat-icon>share</mat-icon>
+                    <span>Share</span>
+                </button>
+            </div>
+            <button mat-menu-item (click)="openRename(file);" *ngIf="permissions=='rw'">
+                <mat-icon>border_color</mat-icon>
+                <span>Rename</span>
+            </button>
+            <button mat-menu-item (click)="open(file, true);" *ngIf="permissions=='rw' && !file.isDir && getType(file)==='text'">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="cut(file);" *ngIf="permissions=='rw'">
+                <mat-icon>content_cut</mat-icon>
+                <span>Cut</span>
+            </button>
+            <button mat-menu-item (click)="copy(file);" *ngIf="permissions=='rw'">
+                <mat-icon>content_copy</mat-icon>
+                <span>Copy</span>
+            </button>
+            <button mat-menu-item (click)="delete(file);" *ngIf="permissions=='rw'">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+            </button>
+        </mat-menu>
+    </a>
+</mat-nav-list>
+
+<div class="actions-fabs">
+    <button mat-mini-fab (click)="create(true)" *ngIf="permissions=='rw'">
+        <mat-icon>create_new_folder</mat-icon>
+    </button>
+    <button mat-mini-fab (click)="create(false)" *ngIf="permissions=='rw'">
+        <mat-icon>note_add</mat-icon>
+    </button>
+    <app-file-uploader [path]="currentPath" (UploadComplete)="onUploadComplete($event)" [basePath]="basePath" *ngIf="permissions=='rw'"></app-file-uploader>
+    <button mat-mini-fab (click)="paste()" *ngIf="cutCopyFile !== undefined" [@appear]>
+        <mat-icon>content_paste</mat-icon>
+    </button>
+    <button mat-mini-fab (click)="cutCopyFile = undefined" *ngIf="cutCopyFile !== undefined" [@appear]>
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>

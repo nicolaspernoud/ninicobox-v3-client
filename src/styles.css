@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+body {
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+    overscroll-behavior-y: contain;
+}
+
+.mat-card {
+    padding: 12px !important;
+}
+
+.nopadding .mat-expansion-panel-body {
+    padding: 0px;
+}
+
+.mat-option-text {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.horizontal-flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: line;
+}
+
+.vertical-flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+mat-expansion-panel {
+    width: 100%;
+    margin-bottom: 5px !important;
+}
+
+.mat-mini-fab, .mat-raised-button, mat-form-field {
+    margin: 0px 5px 0px 5px !important;
+}
