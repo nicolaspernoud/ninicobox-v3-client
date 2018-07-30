@@ -94,7 +94,8 @@ export class FilesService {
     }
 
     getShareToken(basePath, filePath): Observable<string> {
-        return this.http.get(`${this.getUrl(basePath, filePath)}/getsharetoken`, { responseType: 'text' });
+        // tslint:disable-next-line:max-line-length
+        return this.http.post(`${environment.apiEndPoint}/common/getsharetoken`, `/api/files${basePath}${filePath}`, { responseType: 'text' });
     }
 
     delete(basePath, filePath, isDir) {
@@ -102,7 +103,7 @@ export class FilesService {
     }
 
     private getUrl(basePath, filePath) {
-        return `${this.urlBase}/${basePath}${filePath ? filePath : ''}`;
+        return `${this.urlBase}${basePath}${filePath ? filePath : ''}`;
     }
 
     private getRelativePath(basePath, absoluteFilePath) {
