@@ -35,7 +35,7 @@ export class FilesService {
                             const isdir = typeof x['D:propstat'][0]['D:prop'][0]['D:resourcetype'][0] === 'object';
                             const file: File = {
                                 name: x['D:propstat'][0]['D:prop'][0]['D:displayname'][0],
-                                path: decodeURIComponent(self.getRelativePath(basePath, x['D:href'][0])),
+                                path: self.getRelativePath(basePath, x['D:href'][0]),
                                 isDir: isdir,
                                 size: isdir ? 0 : parseInt(x['D:propstat'][0]['D:prop'][0]['D:getcontentlength'][0], 10),
                                 mtime: new Date(x['D:propstat'][0]['D:prop'][0]['D:getlastmodified'][0])

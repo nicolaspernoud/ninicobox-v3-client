@@ -126,7 +126,7 @@ export class ExplorerComponent implements OnInit {
         } else if (fileType === 'audio' || fileType === 'video' || fileType === 'image' || fileType === 'other') {
             this.fileService.getShareToken(this.basePath, file.path).subscribe(data => {
                 // tslint:disable-next-line:max-line-length
-                const url = this.sanitizer.bypassSecurityTrustResourceUrl(`${environment.apiEndPoint}/files${encodeURIComponent(this.basePath)}${encodeURIComponent(file.path)}?token=${data}`);
+                const url = this.sanitizer.bypassSecurityTrustResourceUrl(`${environment.apiEndPoint}/files${this.basePath}${file.path}?token=${data}`);
                 const dialogRef = this.dialog.open(OpenComponent, {
                     data: {
                         url: url,
@@ -167,7 +167,7 @@ export class ExplorerComponent implements OnInit {
     download(file: File, share: boolean) {
         this.fileService.getShareToken(this.basePath, file.path).subscribe(data => {
             // tslint:disable-next-line:max-line-length
-            const shareURL = `${environment.apiEndPoint}/files${encodeURIComponent(this.basePath)}${encodeURIComponent(file.path)}?token=${data}`;
+            const shareURL = `${environment.apiEndPoint}/files${this.basePath}${file.path}?token=${data}`;
             if (share) {
                 this.dialog.open(BasicDialogComponent, {
                     data: {
