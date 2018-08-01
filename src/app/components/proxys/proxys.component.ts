@@ -51,6 +51,7 @@ export class ProxysComponent implements OnInit {
         proxy.completeUrl = this.getIFrameUrl(proxy);
         this.proxys.push(proxy);
         this.proxys.sort((a, b) => a.rank - b.rank);
+        this.save();
       }
     });
   }
@@ -78,6 +79,6 @@ export class ProxysComponent implements OnInit {
   }
 
   getIFrameUrl(proxy: ClientProxy) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`${proxy.fromUrl}`);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`http://${proxy.fromUrl}`);
   }
 }
