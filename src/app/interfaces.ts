@@ -1,7 +1,7 @@
 export interface Proxy {
     name: string;
-    url: string;
-    customHeader?: string;
+    fromUrl: string;
+    toUrl: string;
     icon?: string;
     rank?: number;
 }

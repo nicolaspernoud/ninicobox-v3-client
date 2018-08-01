@@ -22,11 +22,7 @@ export class ProxysComponent implements OnInit {
   constructor(private proxysService: ProxysService, private sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.proxysService.getProxyToken().pipe(
-      switchMap(data => {
-        this.proxytoken = data;
-        return this.proxysService.getProxys();
-      }))
+    this.proxysService.getProxys()
       .subscribe(data => {
         this.proxys = data.map(proxy => (
           { ...proxy, completeUrl: this.getIFrameUrl(proxy) }
@@ -44,7 +40,8 @@ export class ProxysComponent implements OnInit {
   add() {
     const newProxy: ClientProxy = {
       name: '',
-      url: '',
+      toUrl: '',
+      fromUrl: '',
       icon: 'home',
       rank: this.proxys.length
     };
@@ -77,14 +74,10 @@ export class ProxysComponent implements OnInit {
   }
 
   delete(proxy: ClientProxy) {
-    this.proxys.splice(this.proxys.findIndex(value => value.url === proxy.url), 1);
+    this.proxys.splice(this.proxys.findIndex(value => value.fromUrl === proxy.fromUrl), 1);
   }
 
   getIFrameUrl(proxy: ClientProxy) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      `${this.proxyBase}?
-JWT=${this.proxytoken}
-${proxy.customHeader ? '&customHeader=' + encodeURIComponent(proxy.customHeader) : ''}
-&url=[${proxy.url}]`);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${proxy.fromUrl}`);
   }
 }

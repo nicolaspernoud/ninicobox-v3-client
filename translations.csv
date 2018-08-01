@@ -23,11 +23,11 @@ No;Non
 Operation in progress...;Opération en cours...
 Password;Mot de passe
 Please allow geolocation to login;Merci d'activer la géolocalisation pour vous connecter
-Proxy custom header;En-tête http personnalisé
 Proxy display rank;Ordre d'affichage
 Proxy icon;Icone
 Proxy name;Nom du proxy
-Proxy url;Adresse du proxy
+Proxy from;Url de départ
+Proxy to;Url de destination
 Proxys services;Services
 Rename;Renommer
 Save;Enregistrer

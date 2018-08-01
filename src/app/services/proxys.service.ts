@@ -12,16 +12,9 @@ import { handleHTTPError } from '../utility_functions';
 @Injectable()
 export class ProxysService {
 
-  private endpoint = `${environment.apiEndPoint}/secured/admin/proxys`;
-  private tokenEndpoint = `${environment.apiEndPoint}/secured/admin/getproxytoken`;
+  private endpoint = `${environment.apiEndPoint}/admin/proxys`;
 
   constructor(private http: HttpClient) { }
-
-  getProxyToken(): Observable<string> {
-    return this.http
-      .get(this.tokenEndpoint, { responseType: 'text' }).pipe(
-      catchError(handleHTTPError));
-  }
 
   getProxys(): Observable<Proxy[]> {
     return this.http

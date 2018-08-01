@@ -5,14 +5,14 @@
     <mat-icon>edit</mat-icon>Proxy name</mat-placeholder>
 </mat-form-field>
 <mat-form-field>
-  <input matInput #proxyURL [value]="data.url">
+  <input matInput #proxyURL [value]="data.fromUrl">
   <mat-placeholder>
-    <mat-icon>link</mat-icon>Proxy url</mat-placeholder>
+    <mat-icon>link</mat-icon>Proxy from</mat-placeholder>
 </mat-form-field>
 <mat-form-field>
-  <input matInput #proxyCustomHeader [value]="!!data.customHeader ? data.customHeader : ''">
+  <input matInput #proxyURL [value]="data.toUrl">
   <mat-placeholder>
-    <mat-icon>build</mat-icon>Proxy custom header</mat-placeholder>
+    <mat-icon>link</mat-icon>Proxy to</mat-placeholder>
 </mat-form-field>
 <mat-form-field>
   <mat-select #proxyIcon placeholder="Proxy icon" [(value)]="data.icon">
