@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { AddProxyDialogComponent } from './add-proxy-dialog/add-proxy-dialog.component';
 import { switchMap } from 'rxjs/operators';
 import { appAnimations } from '../../animations';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-proxys',
@@ -16,10 +17,9 @@ import { appAnimations } from '../../animations';
 export class ProxysComponent implements OnInit {
 
   public proxys: ClientProxy[];
-  private proxyBase = `${environment.apiEndPoint}/secured/proxy`;
-  private proxytoken: string;
 
-  constructor(private proxysService: ProxysService, private sanitizer: DomSanitizer, public dialog: MatDialog) { }
+  // tslint:disable-next-line:max-line-length
+  constructor(private proxysService: ProxysService, private authService: AuthService, private sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.proxysService.getProxys()
@@ -64,6 +64,7 @@ export class ProxysComponent implements OnInit {
         Object.assign(editedProxy, data);
         editedProxy.completeUrl = this.getIFrameUrl(editedProxy);
         this.proxys.sort((a, b) => a.rank - b.rank);
+        this.save();
       }
     });
   }
@@ -79,6 +80,7 @@ export class ProxysComponent implements OnInit {
   }
 
   getIFrameUrl(proxy: ClientProxy) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`http://${proxy.fromUrl}`);
+    // tslint:disable-next-line:max-line-length
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`http://${proxy.fromUrl}${environment.port ? ':' + environment.port : ''}?token=${this.authService.getToken()}`);
   }
 }
