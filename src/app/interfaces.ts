@@ -12,6 +12,7 @@ export interface FilesACL {
     roles: string[];
     permissions: string;
     currentPath?: string;
+    basicauth?: boolean;
 }
 
 export interface User {
