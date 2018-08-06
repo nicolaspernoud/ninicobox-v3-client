@@ -12,7 +12,8 @@ import { parseString } from 'xml2js';
 })
 export class FilesService {
     headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    urlBase = `${environment.apiEndPoint}/files`;
+    // tslint:disable-next-line:max-line-length
+    urlBase = environment.apiEndPoint.includes('http') ? `${environment.apiEndPoint}/files` : `${window.location.protocol}//${window.location.host}${environment.apiEndPoint}/files`;
 
     uploadProgress = new BehaviorSubject<number>(0);
 
