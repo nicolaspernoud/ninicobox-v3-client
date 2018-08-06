@@ -2,7 +2,7 @@ const fs = require('fs');
 
 fs.readFile('./dist/ngsw-worker.js', 'utf-8', (err, data) => {
     if (err) throw err;
-    fs.writeFile('./client/dist/ngsw-worker.js', data.replace('onFetch(event) {', `
+    fs.writeFile('./dist/ngsw-worker.js', data.replace('onFetch(event) {', `
     onFetch(event) {
         if (event.request.url.indexOf('/upload') !== -1) { return; }
         if (event.request.url.indexOf('/share') !== -1) { return; }
