@@ -77,10 +77,11 @@ export class ProxysComponent implements OnInit {
 
   delete(proxy: ClientProxy) {
     this.proxys.splice(this.proxys.findIndex(value => value.fromUrl === proxy.fromUrl), 1);
+    this.save();
   }
 
   getIFrameUrl(proxy: ClientProxy) {
     // tslint:disable-next-line:max-line-length
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`http://${proxy.fromUrl}${environment.port ? ':' + environment.port : ''}?token=${this.authService.getToken()}`);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${environment.production ? 'https' : 'http'}://${proxy.fromUrl}${environment.port ? ':' + environment.port : ''}?token=${this.authService.getToken()}`);
   }
 }
