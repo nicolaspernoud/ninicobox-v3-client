@@ -4,6 +4,7 @@ export interface Proxy {
     toUrl: string;
     icon?: string;
     rank?: number;
+    secured?: boolean;
 }
 
 export interface FilesACL {

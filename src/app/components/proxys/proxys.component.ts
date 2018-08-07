@@ -42,6 +42,7 @@ export class ProxysComponent implements OnInit {
       name: '',
       toUrl: '',
       fromUrl: '',
+      secured: false,
       icon: 'home',
       rank: this.proxys.length
     };
@@ -81,7 +82,10 @@ export class ProxysComponent implements OnInit {
   }
 
   getIFrameUrl(proxy: ClientProxy) {
-    // tslint:disable-next-line:max-line-length
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`${environment.production ? 'https' : 'http'}://${proxy.fromUrl}${environment.port ? ':' + environment.port : ''}?token=${this.authService.getToken()}`);
+    let url = `${environment.production ? 'https' : 'http'}://${proxy.fromUrl}${environment.port ? ':' + environment.port : ''}`;
+    if (proxy.secured) {
+      url += `?token=${this.authService.getToken()}`;
+    }
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

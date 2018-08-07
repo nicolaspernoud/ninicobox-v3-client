@@ -14,6 +14,7 @@
   <mat-placeholder>
     <mat-icon>link</mat-icon>Proxy to</mat-placeholder>
 </mat-form-field>
+<mat-checkbox #secured [(ngModel)]="data.secured">Secured by JWT</mat-checkbox>
 <mat-form-field>
   <mat-select #proxyIcon placeholder="Proxy icon" [(value)]="data.icon">
     <mat-select-trigger>
@@ -31,8 +32,9 @@
 </mat-form-field>
 <button mat-raised-button color="primary" (click)="dialogRef.close({
       name: proxyName.value,
-      fromURL: proxyFromURL.value,
-      toURL: proxyToURL.value,
+      fromUrl: proxyFromURL.value,
+      toUrl: proxyToURL.value,
+      secured: secured.checked,
       icon: proxyIcon.value,
       rank: proxyRank.value
     })">Save</button>
