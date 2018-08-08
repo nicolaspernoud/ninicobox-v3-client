@@ -24,6 +24,9 @@ export class AppComponent implements OnInit {
 
   constructor(private authService: AuthService, private update: UpdateService, private router: Router) {
     authService.autoLogin();
+    window.onblur = function () {
+      router.navigate(['/']);
+    };
   }
 
   ngOnInit() {
