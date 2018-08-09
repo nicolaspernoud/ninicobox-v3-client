@@ -30,12 +30,20 @@
   <mat-placeholder>
     <mat-icon>sort</mat-icon>Proxy display rank</mat-placeholder>
 </mat-form-field>
+<mat-checkbox #iFramed [(ngModel)]="data.iframed">Display in iframe</mat-checkbox>
+<mat-form-field>
+  <input matInput #iFramePath [value]="data.iframepath">
+  <mat-placeholder>
+    <mat-icon>edit</mat-icon>Displayed path in iframe</mat-placeholder>
+</mat-form-field>
 <button mat-raised-button color="primary" (click)="dialogRef.close({
       name: proxyName.value,
       fromUrl: proxyFromURL.value,
       toUrl: proxyToURL.value,
       secured: secured.checked,
       icon: proxyIcon.value,
-      rank: proxyRank.value
+      rank: proxyRank.value,
+      iframed: iFramed.checked,
+      iframepath: iFramePath.value
     })">Save</button>
 <button mat-raised-button (click)="dialogRef.close()">Close dialog</button>

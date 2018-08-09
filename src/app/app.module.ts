@@ -33,6 +33,7 @@ import { RenameDialogComponent } from './components/explorers/explorer/rename-di
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { OpenComponent } from './components/explorers/explorer/open/open.component';
 import { BasicDialogComponent } from './components/basic-dialog/basic-dialog.component';
+import { ProxyFilterIframed } from './components/proxys/proxyfilteriframed.pipe';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { BasicDialogComponent } from './components/basic-dialog/basic-dialog.com
     ConfirmDialogComponent,
     OpenComponent,
     BasicDialogComponent,
+    ProxyFilterIframed
   ],
   imports: [
     FormsModule,

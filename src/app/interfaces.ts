@@ -5,6 +5,8 @@ export interface Proxy {
     icon?: string;
     rank?: number;
     secured?: boolean;
+    iframed?: boolean;
+    iframepath?: string;
 }
 
 export interface FilesACL {

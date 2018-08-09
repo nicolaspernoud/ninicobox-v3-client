@@ -32,11 +32,6 @@ export class ProxysComponent implements OnInit {
       });
   }
 
-  refresh(proxy) {
-    const iframe = document.getElementById(proxy.name) as HTMLIFrameElement;
-    if (iframe) { iframe.contentWindow.location.reload(true); }
-  }
-
   add() {
     const newProxy: ClientProxy = {
       name: '',
@@ -44,7 +39,9 @@ export class ProxysComponent implements OnInit {
       fromUrl: '',
       secured: false,
       icon: 'home',
-      rank: this.proxys.length
+      rank: this.proxys.length,
+      iframed: false,
+      iframepath: ''
     };
     const dialogRef = this.dialog.open(AddProxyDialogComponent, { data: newProxy });
     dialogRef.afterClosed().subscribe(proxy => {
@@ -82,7 +79,8 @@ export class ProxysComponent implements OnInit {
   }
 
   getIFrameUrl(proxy: ClientProxy) {
-    let url = `${environment.production ? 'https' : 'http'}://${proxy.fromUrl}${environment.port ? ':' + environment.port : ''}`;
+    // tslint:disable-next-line:max-line-length
+    let url = `${environment.production ? 'https' : 'http'}://${proxy.fromUrl}${environment.port ? ':' + environment.port : ''}/${proxy.iframepath}`;
     if (proxy.secured) {
       url += `?token=${this.authService.getToken()}`;
     }
