@@ -2,12 +2,12 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const port = '2080';
+const port = '2443';
 
 export const environment = {
   production: false,
   port: port,
-  apiEndPoint: `http://localhost:${port}/api`
+  apiEndPoint: `https://localhost:${port}/api`
 };
 
 /*

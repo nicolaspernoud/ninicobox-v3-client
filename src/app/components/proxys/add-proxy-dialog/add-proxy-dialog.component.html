@@ -5,12 +5,12 @@
     <mat-icon>edit</mat-icon>Proxy name</mat-placeholder>
 </mat-form-field>
 <mat-form-field>
-  <input matInput #proxyFromURL [value]="data.fromUrl">
+  <input matInput #proxyFrom [value]="data.proxyFrom">
   <mat-placeholder>
     <mat-icon>link</mat-icon>Proxy from</mat-placeholder>
 </mat-form-field>
 <mat-form-field>
-  <input matInput #proxyToURL [value]="data.toUrl">
+  <input matInput #proxyTo [value]="data.proxyTo">
   <mat-placeholder>
     <mat-icon>link</mat-icon>Proxy to</mat-placeholder>
 </mat-form-field>
@@ -38,8 +38,8 @@
 </mat-form-field>
 <button mat-raised-button color="primary" (click)="dialogRef.close({
       name: proxyName.value,
-      fromUrl: proxyFromURL.value,
-      toUrl: proxyToURL.value,
+      proxyFrom: proxyFrom.value,
+      ProxyTo: proxyTo.value,
       secured: secured.checked,
       icon: proxyIcon.value,
       rank: proxyRank.value,

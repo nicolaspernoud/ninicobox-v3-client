@@ -35,8 +35,8 @@ export class ProxysComponent implements OnInit {
   add() {
     const newProxy: ClientProxy = {
       name: '',
-      toUrl: '',
-      fromUrl: '',
+      proxyTo: '',
+      proxyFrom: '',
       secured: false,
       icon: 'home',
       rank: this.proxys.length,
@@ -74,13 +74,13 @@ export class ProxysComponent implements OnInit {
   }
 
   delete(proxy: ClientProxy) {
-    this.proxys.splice(this.proxys.findIndex(value => value.fromUrl === proxy.fromUrl), 1);
+    this.proxys.splice(this.proxys.findIndex(value => value.proxyFrom === proxy.proxyFrom), 1);
     this.save();
   }
 
   getIFrameUrl(proxy: ClientProxy) {
     // tslint:disable-next-line:max-line-length
-    let url = `${environment.production ? 'https' : 'http'}://${proxy.fromUrl}${environment.port ? ':' + environment.port : ''}/${proxy.iframepath}`;
+    let url = `${environment.production ? 'https' : 'http'}://${proxy.proxyFrom}${environment.port ? ':' + environment.port : ''}/${proxy.iframepath}`;
     if (proxy.secured) {
       url += `?token=${this.authService.getToken()}`;
     }
