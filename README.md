@@ -1,6 +1,6 @@
 # NinicoboxClient
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.1.
+A home cloud providing file explorer with permissions and access control lists to share files with friends, and acting as a proxy for other services with content rewriting. Client made with Angular 6 and Material Design.
 
 ## Development server
 
