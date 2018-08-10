@@ -7,6 +7,8 @@ export interface Proxy {
     secured?: boolean;
     iframed?: boolean;
     iframepath?: string;
+    login?: string;
+    password?: string;
 }
 
 export interface FilesACL {

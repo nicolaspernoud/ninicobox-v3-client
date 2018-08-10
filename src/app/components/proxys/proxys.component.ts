@@ -41,7 +41,9 @@ export class ProxysComponent implements OnInit {
       icon: 'home',
       rank: this.proxys.length,
       iframed: false,
-      iframepath: ''
+      iframepath: '',
+      login: '',
+      password: ''
     };
     const dialogRef = this.dialog.open(AddProxyDialogComponent, { data: newProxy });
     dialogRef.afterClosed().subscribe(proxy => {
@@ -80,7 +82,7 @@ export class ProxysComponent implements OnInit {
 
   getIFrameUrl(proxy: ClientProxy) {
     // tslint:disable-next-line:max-line-length
-    let url = `${environment.production ? 'https' : 'http'}://${proxy.proxyFrom}${environment.port ? ':' + environment.port : ''}/${proxy.iframepath}`;
+    let url = `https://${proxy.proxyFrom}${environment.port ? ':' + environment.port : ''}/${proxy.iframepath}`;
     if (proxy.secured) {
       url += `?token=${this.authService.getToken()}`;
     }

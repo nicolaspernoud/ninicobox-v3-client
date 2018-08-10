@@ -7,12 +7,12 @@
 <mat-form-field>
   <input matInput #proxyFrom [value]="data.proxyFrom">
   <mat-placeholder>
-    <mat-icon>link</mat-icon>Proxy from</mat-placeholder>
+    <mat-icon>place</mat-icon>Proxy from</mat-placeholder>
 </mat-form-field>
 <mat-form-field>
   <input matInput #proxyTo [value]="data.proxyTo">
   <mat-placeholder>
-    <mat-icon>link</mat-icon>Proxy to</mat-placeholder>
+    <mat-icon>navigation</mat-icon>Proxy to</mat-placeholder>
 </mat-form-field>
 <mat-checkbox #secured [(ngModel)]="data.secured">Secured by JWT</mat-checkbox>
 <mat-form-field>
@@ -34,7 +34,17 @@
 <mat-form-field>
   <input matInput #iFramePath [value]="data.iframepath">
   <mat-placeholder>
-    <mat-icon>edit</mat-icon>Displayed path in iframe</mat-placeholder>
+    <mat-icon>map</mat-icon>Displayed path in iframe</mat-placeholder>
+</mat-form-field>
+<mat-form-field>
+  <input matInput #login [value]="data.login">
+  <mat-placeholder>
+    <mat-icon>account_circle</mat-icon>Login</mat-placeholder>
+</mat-form-field>
+<mat-form-field>
+  <input matInput #password [value]="data.password">
+  <mat-placeholder>
+    <mat-icon>vpn_key</mat-icon>Password</mat-placeholder>
 </mat-form-field>
 <button mat-raised-button color="primary" (click)="dialogRef.close({
       name: proxyName.value,
@@ -44,6 +54,8 @@
       icon: proxyIcon.value,
       rank: proxyRank.value,
       iframed: iFramed.checked,
-      iframepath: iFramePath.value
+      iframepath: iFramePath.value,
+      login: login.value,
+      password: password.value
     })">Save</button>
 <button mat-raised-button (click)="dialogRef.close()">Close dialog</button>
