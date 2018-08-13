@@ -1,51 +1,53 @@
 <h1 mat-dialog-title>Add/Edit proxy</h1>
-<mat-form-field>
-  <input matInput #proxyName [value]="data.name">
-  <mat-placeholder>
-    <mat-icon>edit</mat-icon>Proxy name</mat-placeholder>
-</mat-form-field>
-<mat-form-field>
-  <input matInput #proxyFrom [value]="data.proxyFrom">
-  <mat-placeholder>
-    <mat-icon>place</mat-icon>Proxy from</mat-placeholder>
-</mat-form-field>
-<mat-form-field>
-  <input matInput #proxyTo [value]="data.proxyTo">
-  <mat-placeholder>
-    <mat-icon>navigation</mat-icon>Proxy to</mat-placeholder>
-</mat-form-field>
-<mat-checkbox #secured [(ngModel)]="data.secured">Secured by JWT</mat-checkbox>
-<mat-form-field>
-  <mat-select #proxyIcon placeholder="Proxy icon" [(value)]="data.icon">
-    <mat-select-trigger>
-      <mat-icon>{{ data.icon }}</mat-icon>
-    </mat-select-trigger>
-    <mat-option *ngFor="let icon of icons" [value]="icon.value">
-      <mat-icon>{{ icon.name }}</mat-icon>
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<mat-form-field>
-  <input matInput type="number" #proxyRank [value]="!!data.rank ? data.rank : 0">
-  <mat-placeholder>
-    <mat-icon>sort</mat-icon>Proxy display rank</mat-placeholder>
-</mat-form-field>
-<mat-checkbox #iFramed [(ngModel)]="data.iframed">Display in iframe</mat-checkbox>
-<mat-form-field>
-  <input matInput #iFramePath [value]="data.iframepath">
-  <mat-placeholder>
-    <mat-icon>map</mat-icon>Displayed path in iframe</mat-placeholder>
-</mat-form-field>
-<mat-form-field>
-  <input matInput #login [value]="data.login">
-  <mat-placeholder>
-    <mat-icon>account_circle</mat-icon>Login</mat-placeholder>
-</mat-form-field>
-<mat-form-field>
-  <input matInput #password [value]="data.password">
-  <mat-placeholder>
-    <mat-icon>vpn_key</mat-icon>Password</mat-placeholder>
-</mat-form-field>
+<mat-dialog-content>
+  <mat-form-field>
+    <input matInput #proxyName [value]="data.name">
+    <mat-placeholder>
+      <mat-icon>edit</mat-icon>Proxy name</mat-placeholder>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput #proxyFrom [value]="data.proxyFrom">
+    <mat-placeholder>
+      <mat-icon>place</mat-icon>Proxy from</mat-placeholder>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput #proxyTo [value]="data.proxyTo">
+    <mat-placeholder>
+      <mat-icon>navigation</mat-icon>Proxy to</mat-placeholder>
+  </mat-form-field>
+  <mat-checkbox #secured [(ngModel)]="data.secured">Secured by JWT</mat-checkbox>
+  <mat-form-field>
+    <mat-select #proxyIcon placeholder="Proxy icon" [(value)]="data.icon">
+      <mat-select-trigger>
+        <mat-icon>{{ data.icon }}</mat-icon>
+      </mat-select-trigger>
+      <mat-option *ngFor="let icon of icons" [value]="icon.value">
+        <mat-icon>{{ icon.name }}</mat-icon>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" #proxyRank [value]="!!data.rank ? data.rank : 0">
+    <mat-placeholder>
+      <mat-icon>sort</mat-icon>Proxy display rank</mat-placeholder>
+  </mat-form-field>
+  <mat-checkbox #iFramed [(ngModel)]="data.iframed">Display in iframe</mat-checkbox>
+  <mat-form-field>
+    <input matInput #iFramePath [value]="data.iframepath">
+    <mat-placeholder>
+      <mat-icon>map</mat-icon>Displayed path in iframe</mat-placeholder>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput #login [value]="data.login">
+    <mat-placeholder>
+      <mat-icon>account_circle</mat-icon>Login</mat-placeholder>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput #password [value]="data.password">
+    <mat-placeholder>
+      <mat-icon>vpn_key</mat-icon>Password</mat-placeholder>
+  </mat-form-field>
+</mat-dialog-content>
 <button mat-raised-button color="primary" (click)="dialogRef.close({
       name: proxyName.value,
       proxyFrom: proxyFrom.value,
