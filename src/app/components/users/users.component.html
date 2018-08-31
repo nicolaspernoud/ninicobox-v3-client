@@ -11,7 +11,7 @@
         <mat-icon>account_circle</mat-icon>Login</mat-placeholder>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="text" [(ngModel)]="user.password" />
+      <input matInput type="text" [(ngModel)]="user.password" (focus)="setRandomPassword(user)"/>
       <mat-placeholder>
         <mat-icon>vpn_key</mat-icon>Password</mat-placeholder>
     </mat-form-field>
