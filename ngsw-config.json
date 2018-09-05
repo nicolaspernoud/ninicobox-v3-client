@@ -25,7 +25,7 @@
       {
           "name": "api",
           "urls": [
-              "api/secured/proxy"
+              "/api/**"
           ],
           "cacheConfig": {
               "maxSize": 0,
