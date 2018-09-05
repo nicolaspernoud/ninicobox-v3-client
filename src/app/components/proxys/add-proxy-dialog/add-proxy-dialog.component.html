@@ -1,23 +1,29 @@
-<h1 mat-dialog-title>Add/Edit proxy</h1>
+<h1 mat-dialog-title>Add/Edit service</h1>
 <mat-dialog-content>
   <mat-form-field>
-    <input matInput #proxyName [value]="data.name">
+    <input matInput #name [value]="data.name">
     <mat-placeholder>
-      <mat-icon>edit</mat-icon>Proxy name</mat-placeholder>
+      <mat-icon>edit</mat-icon>Service name</mat-placeholder>
   </mat-form-field>
   <mat-form-field>
-    <input matInput #proxyFrom [value]="data.proxyFrom">
+    <input matInput #host [value]="data.host">
     <mat-placeholder>
-      <mat-icon>place</mat-icon>Proxy from</mat-placeholder>
+      <mat-icon>place</mat-icon>Host name</mat-placeholder>
   </mat-form-field>
-  <mat-form-field>
-    <input matInput #proxyTo [value]="data.proxyTo">
+  <mat-checkbox #isProxy [(ngModel)]="data.isProxy">Proxy service</mat-checkbox>
+  <mat-form-field [style.display]="data.isProxy ? '' : 'none'">
+    <input matInput #forwardTo [value]="data.forwardTo">
     <mat-placeholder>
       <mat-icon>navigation</mat-icon>Proxy to</mat-placeholder>
   </mat-form-field>
+  <mat-form-field [style.display]="!data.isProxy ? '' : 'none'">
+    <input matInput #serve [value]="data.serve">
+    <mat-placeholder>
+      <mat-icon>folder</mat-icon>Served directory</mat-placeholder>
+  </mat-form-field>
   <mat-checkbox #secured [(ngModel)]="data.secured">Secured by JWT</mat-checkbox>
   <mat-form-field>
-    <mat-select #proxyIcon placeholder="Proxy icon" [(value)]="data.icon">
+    <mat-select #icon placeholder="Proxy icon" [(value)]="data.icon">
       <mat-select-trigger>
         <mat-icon>{{ data.icon }}</mat-icon>
       </mat-select-trigger>
@@ -27,9 +33,9 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="number" #proxyRank [value]="!!data.rank ? data.rank : 0">
+    <input matInput type="number" #rank [value]="!!data.rank ? data.rank : 0">
     <mat-placeholder>
-      <mat-icon>sort</mat-icon>Proxy display rank</mat-placeholder>
+      <mat-icon>sort</mat-icon>Service display rank</mat-placeholder>
   </mat-form-field>
   <mat-checkbox #iFramed [(ngModel)]="data.iframed">Display in iframe</mat-checkbox>
   <mat-form-field>
@@ -49,12 +55,14 @@
   </mat-form-field>
 </mat-dialog-content>
 <button mat-raised-button color="primary" (click)="dialogRef.close({
-      name: proxyName.value,
-      proxyFrom: proxyFrom.value,
-      proxyTo: proxyTo.value,
+      name: name.value,
+      host: host.value,
+      isProxy: isProxy.checked,
+      forwardTo: isProxy.checked ? forwardTo.value : '',
+      serve: !isProxy.checked ? serve.value : '',
       secured: secured.checked,
-      icon: proxyIcon.value,
-      rank: proxyRank.value,
+      icon: icon.value,
+      rank: rank.value,
       iframed: iFramed.checked,
       iframepath: iFramePath.value,
       login: login.value,

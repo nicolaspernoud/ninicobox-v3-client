@@ -1,5 +1,5 @@
  done; : effectué
-Add/Edit proxy;Ajouter/Éditer un proxy
+Add/Edit service;Ajouter/Éditer un service
 Are you sure \?;Êtes-vous sûr ?
 Authentication error;Erreur d'authentification
 Browser not compatible;Navigateur incompatible
@@ -15,6 +15,7 @@ Download;Télécharger
 Edit;Éditer
 Explorer;Explorateur
 Geolocation failure;Erreur de géolocalisation
+Host name;Url de départ
 Login success;Connexion acceptée
 Login;Utilisateur
 Name;Prénom
@@ -25,16 +26,16 @@ No;Non
 Operation in progress...;Opération en cours...
 Password;Mot de passe
 Please allow geolocation to login;Merci d'activer la géolocalisation pour vous connecter
-Proxy display rank;Ordre d'affichage
-Proxy icon;Icone
-Proxy name;Nom du proxy
-Proxy from;Url de départ
+Proxy service;Service proxy
 Proxy to;Url de destination
-Proxys services;Services
 Rename;Renommer
 Save;Enregistrer
 Secured by JWT;Sécurisé par JWT
+Served directory;Dossier servi
 Server communication error;Erreur de communication avec le serveur
+Service display rank;Ordre d'affichage
+Service icon;Icone
+Service name;Nom du service
 Session expired, please login.;Session terminée, veuillez vous reconnecter.
 Share;Partager
 Surname;Nom

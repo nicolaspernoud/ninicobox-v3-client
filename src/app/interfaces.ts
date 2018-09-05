@@ -1,7 +1,9 @@
 export interface Proxy {
     name: string;
-    proxyFrom: string;
-    proxyTo: string;
+    isProxy: boolean;
+    host: string;
+    forwardTo: string;
+    serve: string;
     icon?: string;
     rank?: number;
     secured?: boolean;
