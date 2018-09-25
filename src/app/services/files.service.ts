@@ -13,17 +13,17 @@ import { parseString } from 'xml2js';
 export class FilesService {
     headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     // tslint:disable-next-line:max-line-length
-    urlBase = environment.apiEndPoint.includes('http') ? `${environment.apiEndPoint}/files` : `${window.location.protocol}//${window.location.host}${environment.apiEndPoint}/files`;
+    host = !!environment.host ? `${environment.host}` : `${window.location.protocol}//${window.location.host}`;
 
     uploadProgress = new BehaviorSubject<number>(0);
 
     constructor(private http: HttpClient) { }
 
-    explore(basePath, filePath = '') {
+    explore(path) {
         const self = this;
         const depthheaders = new HttpHeaders({ 'Depth': '1' });
         return this.http.request('PROPFIND',
-            `${this.getUrl(basePath, filePath)}`,
+            `${this.host}${path}`,
             { headers: depthheaders, responseType: 'text' }
         ).pipe(
             map(
@@ -36,7 +36,7 @@ export class FilesService {
                             const isdir = typeof x['D:propstat'][0]['D:prop'][0]['D:resourcetype'][0] === 'object';
                             const file: File = {
                                 name: x['D:propstat'][0]['D:prop'][0]['D:displayname'][0],
-                                path: self.getRelativePath(basePath, x['D:href'][0]),
+                                path: x['D:href'][0],
                                 isDir: isdir,
                                 size: isdir ? 0 : parseInt(x['D:propstat'][0]['D:prop'][0]['D:getcontentlength'][0], 10),
                                 mtime: new Date(x['D:propstat'][0]['D:prop'][0]['D:getlastmodified'][0])
@@ -49,29 +49,29 @@ export class FilesService {
             ));
     }
 
-    createDir(basePath, filePath = '', directoryname) {
-        return this.http.request('MKCOL', `${this.getUrl(basePath, filePath)}/${directoryname}`);
+    createDir(path, directoryname) {
+        return this.http.request('MKCOL', `${this.host}${path}/${directoryname}`);
     }
 
-    renameOrCopy(basePath, oldpath, newpath, isCopy: boolean) {
+    renameOrCopy(oldpath, newpath, isCopy: boolean) {
         if (!isCopy) {
-            const destinationHeader = new HttpHeaders({ 'Destination': `${this.getUrl(basePath, newpath)}` });
-            return this.http.request('MOVE', `${this.getUrl(basePath, oldpath)}`, {
+            const destinationHeader = new HttpHeaders({ 'Destination': `${this.host}${newpath}` });
+            return this.http.request('MOVE', `${this.host}${oldpath}`, {
                 headers: destinationHeader,
                 responseType: 'text'
             });
         } else {
             newpath = oldpath !== newpath ? newpath : newpath + ' (copy)';
-            const destinationHeader = new HttpHeaders({ 'Destination': `${this.getUrl(basePath, newpath)}` });
-            return this.http.request('COPY', `${this.getUrl(basePath, oldpath)}`, {
+            const destinationHeader = new HttpHeaders({ 'Destination': `${this.host}${newpath}` });
+            return this.http.request('COPY', `${this.host}${oldpath}`, {
                 headers: destinationHeader,
                 responseType: 'text'
             });
         }
     }
 
-    upload(basePath, filePath, file) {
-        const req = new HttpRequest('PUT', `${this.getUrl(basePath, filePath + '/' + file.name)}`, file, {
+    upload(path, file) {
+        const req = new HttpRequest('PUT', `${this.host}${path}/${file.name}`, file, {
             reportProgress: true,
             responseType: 'text'
         });
@@ -82,33 +82,25 @@ export class FilesService {
         );
     }
 
-    getPreview(basePath, filePath) {
-        return this.http.get(`${this.getUrl(basePath, filePath)}`, { responseType: 'blob' });
+    getPreview(path) {
+        return this.http.get(`${this.host}${path}`, { responseType: 'blob' });
     }
 
-    getContent(basePath, filePath) {
-        return this.http.get(`${this.getUrl(basePath, filePath)}`, { responseType: 'text' });
+    getContent(path) {
+        return this.http.get(`${this.host}${path}`, { responseType: 'text' });
     }
 
-    setContent(basePath, filePath, content) {
-        return this.http.put(`${this.getUrl(basePath, filePath)}`, content, { responseType: 'text' });
+    setContent(path, content) {
+        return this.http.put(`${this.host}${path}`, content, { responseType: 'text' });
     }
 
-    getShareToken(basePath, filePath): Observable<string> {
+    getShareToken(path): Observable<string> {
         // tslint:disable-next-line:max-line-length
-        return this.http.post(`${environment.apiEndPoint}/common/getsharetoken`, `/api/files${basePath}${filePath}`, { responseType: 'text' });
+        return this.http.post(`${environment.apiEndPoint}/common/getsharetoken`, path, { responseType: 'text' });
     }
 
-    delete(basePath, filePath, isDir) {
-        return this.executeRequest(`${this.getUrl(basePath, filePath)}`, 'DELETE', { isDir: isDir });
-    }
-
-    private getUrl(basePath, filePath) {
-        return `${this.urlBase}${basePath}${filePath ? filePath : ''}`;
-    }
-
-    private getRelativePath(basePath, absoluteFilePath) {
-        return `${new URL(this.urlBase).origin}${absoluteFilePath}`.slice(`${this.urlBase}${basePath}`.length);
+    delete(path, isDir) {
+        return this.executeRequest(`${this.host}${path}`, 'DELETE', { isDir: isDir });
     }
 
     private executeRequest(url, method = 'GET', sentData = null, params = null) {

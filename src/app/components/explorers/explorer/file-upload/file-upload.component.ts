@@ -22,7 +22,7 @@ export class FileUploadComponent implements OnInit {
 
     onChange(event) {
         if (event.target.files.length > 0) {
-            this.filesService.upload(this.basePath, this.path, event.target.files[0]).subscribe(
+            this.filesService.upload(this.path, event.target.files[0]).subscribe(
                 data => {
                     this.progress = 0;
                     if (!!this.UploadComplete) {
