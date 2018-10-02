@@ -5,11 +5,11 @@
                 {{filesacl.name}}
             </mat-panel-title>
             <mat-panel-title>
-                {{filesacl.currentPath}}
+                {{filesacl.displayedPath()}}
             </mat-panel-title>
         </mat-expansion-panel-header>
         <ng-template matExpansionPanelContent>
-            <app-explorer [name]="filesacl.name" [permissions]="filesacl.permissions" [basePath]="'/'+filesacl.path" (CurrentPathChanged)="currentPathChanged($event)"></app-explorer>
+            <app-explorer [name]="filesacl.name" [permissions]="filesacl.permissions" [basePath]="filesacl.basePath()" [currentPath]="filesacl.currentPath"  (CurrentPathChanged)="currentPathChanged($event)"></app-explorer>
         </ng-template>
     </mat-expansion-panel>
 </div>

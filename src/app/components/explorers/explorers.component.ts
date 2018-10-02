@@ -14,13 +14,16 @@ import { appAnimations } from '../../animations';
 })
 export class ExplorersComponent implements OnInit {
 
-  public filesacls: FilesACL[];
+  public filesacls: FilesACL[] = [];
 
   constructor(private filesACLsService: FilesACLsService, private authService: AuthService) { }
 
   ngOnInit() {
     this.filesACLsService.getFilesACLs().subscribe(data => {
-      this.filesacls = data.filter(filesacls => filesacls.roles.includes(this.authService.getRoleFromToken()) && !filesacls.basicauth);
+      data.filter(value => value.roles.includes(this.authService.getRoleFromToken()) && !value.basicauth)
+        .map(value => {
+          this.filesacls.push(new FilesACL(value));
+        });
     });
   }
 

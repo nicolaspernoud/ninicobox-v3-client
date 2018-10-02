@@ -27,9 +27,9 @@ export class ExplorerComponent implements OnInit {
     @Input() name: string;
     @Input() permissions: string;
     @Input() basePath: string;
+    @Input() currentPath: string;
     @Output() CurrentPathChanged = new EventEmitter<[string, string]>();
     cutCopyFile: [File, boolean]; // Boolean is true if operation is a copy, false if it is a cut
-    currentPath: string;
 
     // tslint:disable-next-line:max-line-length
     constructor(private fileService: FilesService, public dialog: MatDialog, public snackBar: MatSnackBar, private sanitizer: DomSanitizer) {
@@ -49,8 +49,6 @@ export class ExplorerComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.basePath = `${environment.apiRoute}/files${this.basePath}`;
-        this.currentPath = this.basePath;
         this.exploreCurrentDirectory().subscribe(this.displayFiles());
     }
 

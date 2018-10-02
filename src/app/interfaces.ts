@@ -1,3 +1,5 @@
+import { environment } from '../environments/environment';
+
 export interface Proxy {
     name: string;
     isProxy: boolean;
@@ -13,13 +15,26 @@ export interface Proxy {
     password?: string;
 }
 
-export interface FilesACL {
+export class FilesACL {
     name: string;
     path: string;
     roles: string[];
     permissions: string;
     currentPath?: string;
     basicauth?: boolean;
+
+    constructor(data: any) {
+        Object.assign(this, data);
+        this.currentPath = this.basePath();
+    }
+
+    basePath(): string {
+        return `${environment.apiRoute}/files/${this.path}`;
+    }
+
+    displayedPath() {
+        return decodeURI(this.currentPath.slice(this.basePath().length));
+    }
 }
 
 export interface User {
