@@ -50,7 +50,7 @@ export class FilesService {
     }
 
     createDir(path, directoryname) {
-        return this.http.request('MKCOL', `${this.host}${path}/${directoryname}`);
+        return this.http.request('MKCOL', `${this.host}${path}/${directoryname}`, { responseType: 'text' });
     }
 
     renameOrCopy(oldpath, newpath, isCopy: boolean) {

@@ -74,7 +74,7 @@ export class ExplorerComponent implements OnInit {
             this.fileService.createDir(this.currentPath, newFileName)
                 .pipe(switchMap(data => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
         } else {
-            this.fileService.setContent(this.currentPath + newFileName, '')
+            this.fileService.setContent(this.currentPath + '/' + encodeURI(newFileName), '')
                 .pipe(switchMap(data => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
         }
     }
