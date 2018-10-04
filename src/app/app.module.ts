@@ -18,6 +18,7 @@ import { RouteGuard } from './services/route.guard';
 import { ShowToRolesDirective } from './directives/showtoroles.directive';
 import { ClickStopPropagationDirective } from './directives/click-stop-propagation.directive';
 import { UpdateService } from './services/update.service';
+import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 // Business modules
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
@@ -52,7 +53,8 @@ import { ProxyFilterIframed } from './components/proxys/proxyfilteriframed.pipe'
     ConfirmDialogComponent,
     OpenComponent,
     BasicDialogComponent,
-    ProxyFilterIframed
+    ProxyFilterIframed,
+    EscapeHtmlPipe
   ],
   imports: [
     FormsModule,

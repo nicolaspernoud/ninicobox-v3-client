@@ -33,7 +33,7 @@ export class FilesACL {
     }
 
     displayedPath() {
-        return decodeURI(this.currentPath.slice(this.basePath().length));
+        return decodeURI(this.currentPath.slice(this.basePath().length)).replace(/\//g, '&nbsp;<span>▶</span>&nbsp;');
     }
 }
 

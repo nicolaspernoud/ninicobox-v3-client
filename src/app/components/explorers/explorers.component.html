@@ -4,8 +4,7 @@
             <mat-panel-title>
                 {{filesacl.name}}
             </mat-panel-title>
-            <mat-panel-title>
-                {{filesacl.displayedPath()}}
+            <mat-panel-title [innerHTML]="filesacl.displayedPath() | keepHtml">
             </mat-panel-title>
         </mat-expansion-panel-header>
         <ng-template matExpansionPanelContent>
