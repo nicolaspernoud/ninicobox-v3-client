@@ -24,14 +24,16 @@ export class AppComponent implements OnInit {
 
   constructor(private authService: AuthService, private update: UpdateService, private router: Router) {
     authService.autoLogin();
-    // On standalone mode, switch to explorer on leaving the app, in case some proxys use the battery to much
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-          router.navigate(['/explorer']);
-        }
-      });
+    document.addEventListener('visibilitychange', () => {
+      // On focus, check if user is still logged in
+      if (!document.hidden) {
+        authService.autoLogout();
+        // On standalone mode, switch to explorer on leaving the app, in case some proxys use the battery too much
+      } else if (window.matchMedia('(display-mode: standalone)').matches) {
+        router.navigate(['/explorer']);
+      }
     }
+    );
   }
 
   ngOnInit() {

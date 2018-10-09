@@ -82,6 +82,12 @@ export class AuthService {
         }
     }
 
+    autoLogout() {
+        if (this.isTokenExpired()) {
+            this.logout();
+        }
+    }
+
     login(user) {
         this.loginInProgressOrLoggedSource.next(true);
         return this.http.post(`${this.apiEndPoint}/login`, user, { responseType: 'text' }).subscribe(
