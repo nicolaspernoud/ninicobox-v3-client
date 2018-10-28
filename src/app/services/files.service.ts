@@ -15,7 +15,10 @@ export class FilesService {
     // tslint:disable-next-line:max-line-length
     host = !!environment.host ? `${environment.host}` : `${window.location.protocol}//${window.location.host}`;
 
-    uploadProgress = new BehaviorSubject<number>(0);
+    uploadProgress = new BehaviorSubject<UploadProgress>({
+        filename: '',
+        progress: 0
+    });
 
     constructor(private http: HttpClient) { }
 
@@ -120,7 +123,10 @@ export class FilesService {
             case HttpEventType.UploadProgress:
                 // Compute and show the % done:
                 const percentDone = Math.round(100 * event.loaded / event.total);
-                this.uploadProgress.next(percentDone);
+                this.uploadProgress.next({
+                    filename: file.name,
+                    progress: percentDone
+                });
                 return `File "${file.name}" is ${percentDone}% uploaded.`;
 
             case HttpEventType.Response:
@@ -130,4 +136,9 @@ export class FilesService {
                 return `File "${file.name}" surprising upload event: ${event.type}.`;
         }
     }
+}
+
+export interface UploadProgress {
+    filename: string;
+    progress: number;
 }

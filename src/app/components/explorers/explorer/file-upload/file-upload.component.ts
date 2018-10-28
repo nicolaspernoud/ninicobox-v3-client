@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FilesService } from '../../../../services/files.service';
+import { FilesService, UploadProgress } from '../../../../services/files.service';
 
 @Component({
     selector: 'app-file-uploader',
@@ -10,26 +10,39 @@ export class FileUploadComponent implements OnInit {
     @Input() path;
     @Input() basePath: string;
     @Output() UploadComplete: EventEmitter<void> = new EventEmitter<void>();
-    progress: number;
+    uploads: UploadProgress[] = [];
 
-    constructor(private filesService: FilesService) {}
+    constructor(private filesService: FilesService) { }
 
     ngOnInit() {
-        this.filesService.uploadProgress.subscribe(value => {
-            this.progress = value;
-        });
+        this.filesService.uploadProgress.subscribe(
+            value => {
+                try {
+                    this.uploads.find(element => element.filename === value.filename).progress = value.progress;
+                } catch (error) {
+                    console.error(error);
+                }
+            },
+            err => { console.log(err); }
+        );
     }
 
     onChange(event) {
         if (event.target.files.length > 0) {
-            this.filesService.upload(this.path, event.target.files[0]).subscribe(
-                data => {
-                    this.progress = 0;
-                    if (!!this.UploadComplete) {
-                        this.UploadComplete.emit(event.target.files[0].name);
-                    }
-                },
-                err => { console.log(err); });
+            for (const file of event.target.files) {
+                this.uploads.push({
+                    filename: file.name,
+                    progress: 0
+                });
+                this.filesService.upload(this.path, file).subscribe(
+                    data => {
+                        if (!!this.UploadComplete) {
+                            this.UploadComplete.emit(file.name);
+                            this.uploads.splice(this.uploads.findIndex(element => element.filename === file.filename));
+                        }
+                    },
+                    err => { console.log(err); });
+            }
         }
     }
 }
