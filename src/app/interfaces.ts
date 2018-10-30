@@ -1,6 +1,6 @@
 import { environment } from '../environments/environment';
 
-export interface Proxy {
+export interface App {
     name: string;
     isProxy: boolean;
     host: string;

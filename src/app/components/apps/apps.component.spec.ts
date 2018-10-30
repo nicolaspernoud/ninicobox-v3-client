@@ -1,27 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProxysComponent } from './proxys.component';
+import { AppsComponent } from './apps.component';
 import { MaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProxysService } from '../../services/proxys.service';
+import { AppsService } from '../../services/apps.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 
-describe('ProxysComponent', () => {
-  let component: ProxysComponent;
-  let fixture: ComponentFixture<ProxysComponent>;
+describe('AppsComponent', () => {
+  let component: AppsComponent;
+  let fixture: ComponentFixture<AppsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProxysComponent ],
+      declarations: [ AppsComponent ],
       imports: [
         MaterialModule, BrowserAnimationsModule
       ],
-      providers: [ProxysService, HttpClient, HttpHandler]
+      providers: [AppsService, HttpClient, HttpHandler]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProxysComponent);
+    fixture = TestBed.createComponent(AppsComponent);
     component = fixture.componentInstance;
     // fixture.detectChanges();
   });

@@ -4,7 +4,7 @@
             <a mat-list-item (click)="isDarkTheme = !isDarkTheme"><mat-icon>palette</mat-icon>Toggle theme</a>
             <hr>
             <a mat-list-item routerLink="/explorer" routerLinkActive="active-link" (click)="menu.close()" *appShowToRoles="['admin']"><mat-icon>search</mat-icon>Explorer</a>
-            <a mat-list-item routerLink="/proxys" routerLinkActive="active-link" (click)="menu.close()" *appShowToRoles="['admin']"><mat-icon>cloud_circle</mat-icon>Services</a>
+            <a mat-list-item routerLink="/apps" routerLinkActive="active-link" (click)="menu.close()" *appShowToRoles="['admin']"><mat-icon>cloud_circle</mat-icon>Applications</a>
             <a mat-list-item routerLink="/users" routerLinkActive="active-link" (click)="menu.close()" *appShowToRoles="['admin']"><mat-icon>account_box</mat-icon>Users management</a>
         </mat-nav-list>
         <span class="flex-spacer"></span>

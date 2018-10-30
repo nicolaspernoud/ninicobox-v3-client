@@ -22,19 +22,19 @@ import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 // Business modules
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
-import { ProxysService } from './services/proxys.service';
+import { AppsService } from './services/apps.service';
 import { LoginComponent } from './components/login/login.component';
 import { ExplorersComponent } from './components/explorers/explorers.component';
 import { FileUploadComponent } from './components/explorers/explorer/file-upload/file-upload.component';
 import { ExplorerComponent, CutCopyProgressBarComponent } from './components/explorers/explorer/explorer.component';
-import { ProxysComponent } from './components/proxys/proxys.component';
+import { AppsComponent } from './components/apps/apps.component';
 import { UsersComponent } from './components/users/users.component';
-import { AddProxyDialogComponent } from './components/proxys/add-proxy-dialog/add-proxy-dialog.component';
+import { AddAppDialogComponent } from './components/apps/add-app-dialog/add-app-dialog.component';
 import { RenameDialogComponent } from './components/explorers/explorer/rename-dialog/rename-dialog.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { OpenComponent } from './components/explorers/explorer/open/open.component';
 import { BasicDialogComponent } from './components/basic-dialog/basic-dialog.component';
-import { ProxyFilterIframed } from './components/proxys/proxyfilteriframed.pipe';
+import { AppFilterIframed } from './components/apps/appfilteriframed.pipe';
 
 @NgModule({
   declarations: [
@@ -46,14 +46,14 @@ import { ProxyFilterIframed } from './components/proxys/proxyfilteriframed.pipe'
     ExplorersComponent,
     ExplorerComponent,
     CutCopyProgressBarComponent,
-    ProxysComponent,
-    AddProxyDialogComponent,
+    AppsComponent,
+    AddAppDialogComponent,
     UsersComponent,
     RenameDialogComponent,
     ConfirmDialogComponent,
     OpenComponent,
     BasicDialogComponent,
-    ProxyFilterIframed,
+    AppFilterIframed,
     EscapeHtmlPipe
   ],
   imports: [
@@ -79,11 +79,11 @@ import { ProxyFilterIframed } from './components/proxys/proxyfilteriframed.pipe'
     AuthService,
     UpdateService,
     RouteGuard,
-    ProxysService,
+    AppsService,
     UsersService
   ],
   bootstrap: [AppComponent],
   // tslint:disable-next-line:max-line-length
-  entryComponents: [AddProxyDialogComponent, RenameDialogComponent, CutCopyProgressBarComponent, ConfirmDialogComponent, OpenComponent, BasicDialogComponent]
+  entryComponents: [AddAppDialogComponent, RenameDialogComponent, CutCopyProgressBarComponent, ConfirmDialogComponent, OpenComponent, BasicDialogComponent]
 })
 export class AppModule { }

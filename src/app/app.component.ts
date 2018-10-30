@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
       // On focus, check if user is still logged in
       if (!document.hidden) {
         authService.autoLogout();
-        // On standalone mode, switch to explorer on leaving the app, in case some proxys use the battery too much
+        // On standalone mode, switch to explorer on leaving the app, in case some apps use the battery too much
       } else if (window.matchMedia('(display-mode: standalone)').matches) {
         router.navigate(['/explorer']);
       }

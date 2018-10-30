@@ -1,22 +1,22 @@
 <div class="vertical-flex-container" [@appear]>
-        <mat-expansion-panel *ngFor="let proxy of proxys | iframed:true" class="nopadding">
+        <mat-expansion-panel *ngFor="let app of apps | iframed:true" class="nopadding">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <mat-icon>{{proxy.icon}}</mat-icon>
-                    {{proxy.name}}
+                    <mat-icon>{{app.icon}}</mat-icon>
+                    {{app.name}}
                 </mat-panel-title>
-                <a mat-icon-button appClickStopPropagation [href]="proxy.completeUrl">
+                <a mat-icon-button appClickStopPropagation [href]="app.completeUrl">
                     <mat-icon>fullscreen</mat-icon>
                 </a>
-                <button mat-icon-button appClickStopPropagation (click)="edit(proxy);">
+                <button mat-icon-button appClickStopPropagation (click)="edit(app);">
                     <mat-icon>edit_content</mat-icon>
                 </button>
-                <button mat-icon-button appClickStopPropagation (click)="delete(proxy);">
+                <button mat-icon-button appClickStopPropagation (click)="delete(app);">
                     <mat-icon>delete</mat-icon>
                 </button>
             </mat-expansion-panel-header>
             <ng-template matExpansionPanelContent>
-                <iframe [id]="proxy.name" [src]="proxy.completeUrl" [title]="proxy.name"></iframe>
+                <iframe [id]="app.name" [src]="app.completeUrl" [title]="app.name"></iframe>
             </ng-template>
         </mat-expansion-panel>
     
@@ -24,20 +24,20 @@
             <button mat-mini-fab (click)="add()">
                 <mat-icon>add_circle</mat-icon>
             </button>
-            <span *ngFor="let proxy of proxys | iframed:false">
+            <span *ngFor="let app of apps | iframed:false">
                 <button mat-button [matMenuTriggerFor]="menu">
-                    <mat-icon>{{proxy.icon}}</mat-icon>{{proxy.name}}
+                    <mat-icon>{{app.icon}}</mat-icon>{{app.name}}
                 </button>
                 <mat-menu #menu="matMenu">
-                    <a mat-menu-item [href]="proxy.completeUrl">
+                    <a mat-menu-item [href]="app.completeUrl">
                         <mat-icon>fullscreen</mat-icon>
                         <span>Show fullscreen</span>
                     </a>
-                    <button mat-menu-item appClickStopPropagation (click)="edit(proxy);">
+                    <button mat-menu-item appClickStopPropagation (click)="edit(app);">
                         <mat-icon>edit_content</mat-icon>
                         <span>Edit</span>
                     </button>
-                    <button mat-menu-item appClickStopPropagation (click)="delete(proxy);">
+                    <button mat-menu-item appClickStopPropagation (click)="delete(app);">
                         <mat-icon>delete</mat-icon>
                         <span>Delete</span>
                     </button>

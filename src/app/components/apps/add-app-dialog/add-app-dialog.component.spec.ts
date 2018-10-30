@@ -1,4 +1,4 @@
-import { AddProxyDialogComponent } from './add-proxy-dialog.component';
+import { AddAppDialogComponent } from './add-app-dialog.component';
 import { async, TestBed, inject } from '@angular/core/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -7,13 +7,13 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { MaterialModule } from '../../../material.module';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 
-describe('AddProxyDialogComponent', () => {
+describe('AddAppDialogComponent', () => {
   let dialog: MatDialog;
   let overlayContainer: OverlayContainer;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AddProxyDialogComponent],
+      declarations: [AddAppDialogComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule
@@ -23,7 +23,7 @@ describe('AddProxyDialogComponent', () => {
 
     TestBed.overrideModule(BrowserDynamicTestingModule, {
       set: {
-        entryComponents: [AddProxyDialogComponent]
+        entryComponents: [AddAppDialogComponent]
       }
     });
 
@@ -42,11 +42,11 @@ describe('AddProxyDialogComponent', () => {
   });
 
   it('should open a dialog with a component', () => {
-    const dialogRef = dialog.open(AddProxyDialogComponent, {
+    const dialogRef = dialog.open(AddAppDialogComponent, {
       data: { param: '1' }
     });
 
     // verify
-    expect(dialogRef.componentInstance instanceof AddProxyDialogComponent).toBe(true);
+    expect(dialogRef.componentInstance instanceof AddAppDialogComponent).toBe(true);
   });
 });

@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { ProxysService } from './proxys.service';
+import { AppsService } from './apps.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 
-describe('ProxysService', () => {
+describe('AppsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ProxysService, HttpClient, HttpHandler]
+      providers: [AppsService, HttpClient, HttpHandler]
     });
   });
 
-  it('should be created', inject([ProxysService], (service: ProxysService) => {
+  it('should be created', inject([AppsService], (service: AppsService) => {
     expect(service).toBeTruthy();
   }));
 });

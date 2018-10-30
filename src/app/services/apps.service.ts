@@ -6,37 +6,37 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { SafeResourceUrl } from '@angular/platform-browser/src/security/dom_sanitization_service';
-import { Proxy } from '../interfaces';
+import { App } from '../interfaces';
 import { handleHTTPError } from '../utility_functions';
 
 @Injectable()
-export class ProxysService {
+export class AppsService {
 
-  private endpoint = `${environment.apiEndPoint}/admin/proxys`;
+  private endpoint = `${environment.apiEndPoint}/admin/apps`;
 
   constructor(private http: HttpClient) { }
 
-  getProxys(): Observable<Proxy[]> {
+  getApps(): Observable<App[]> {
     return this.http
-      .get<Proxy[]>(this.endpoint).pipe(
+      .get<App[]>(this.endpoint).pipe(
       catchError(handleHTTPError));
   }
 
-  setProxys(proxys: ClientProxy[]): Observable<ClientProxy[]> {
-    const sendProxys: ClientProxy[] = [];
-    proxys.forEach(proxy => {
-      const sendProxy: ClientProxy = { ...proxy };
-      delete sendProxy.completeUrl;
-      sendProxys.push(sendProxy);
+  setApps(apps: ClientApp[]): Observable<ClientApp[]> {
+    const sendApps: ClientApp[] = [];
+    apps.forEach(app => {
+      const sendApp: ClientApp = { ...app };
+      delete sendApp.completeUrl;
+      sendApps.push(sendApp);
     }
     );
     return this.http
-      .post<ClientProxy[]>(this.endpoint, sendProxys).pipe(
+      .post<ClientApp[]>(this.endpoint, sendApps).pipe(
       catchError(handleHTTPError));
   }
 
 }
 
-export interface ClientProxy extends Proxy {
+export interface ClientApp extends App {
   completeUrl?: SafeResourceUrl;
 }

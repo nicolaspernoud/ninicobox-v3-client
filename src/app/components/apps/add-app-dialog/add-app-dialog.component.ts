@@ -8,16 +8,16 @@ import { Observable } from 'rxjs';
 import { handleHTTPError } from '../../../utility_functions';
 
 @Component({
-  selector: 'app-add-proxy-dialog',
-  templateUrl: './add-proxy-dialog.component.html',
-  styleUrls: ['./add-proxy-dialog.component.css']
+  selector: 'app-add-app-dialog',
+  templateUrl: './add-app-dialog.component.html',
+  styleUrls: ['./add-app-dialog.component.css']
 })
-export class AddProxyDialogComponent implements OnInit {
+export class AddAppDialogComponent implements OnInit {
 
   public icons: Icon[];
 
   // tslint:disable-next-line:max-line-length
-  constructor(private http: HttpClient, public dialogRef: MatDialogRef<AddProxyDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private http: HttpClient, public dialogRef: MatDialogRef<AddAppDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     // tslint:disable-next-line:max-line-length

@@ -11,7 +11,7 @@ import { handleHTTPError } from '../utility_functions';
 export class UsersService {
 
   private endpoint = `${environment.apiEndPoint}/admin/users`;
-  private tokenEndpoint = `${environment.apiEndPoint}/admin/getproxytoken`;
+  private tokenEndpoint = `${environment.apiEndPoint}/admin/getapptoken`;
 
   constructor(private http: HttpClient) {}
 
