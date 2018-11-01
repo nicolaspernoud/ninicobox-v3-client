@@ -20,7 +20,7 @@ export class FileUploadComponent implements OnInit {
                 try {
                     this.uploads.find(element => element.filename === value.filename).progress = value.progress;
                 } catch (error) {
-                    console.error(error);
+                    console.log('Upload element not yet defined : progress cannot be set (not an error)');
                 }
             },
             err => { console.log(err); }

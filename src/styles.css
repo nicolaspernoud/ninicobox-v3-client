@@ -41,3 +41,8 @@ mat-expansion-panel {
 .mat-mini-fab, .mat-raised-button, mat-form-field {
     margin: 0px 5px 0px 5px !important;
 }
+
+.mat-drawer-inner-container {
+    display: flex;
+    flex-direction: column;
+}
