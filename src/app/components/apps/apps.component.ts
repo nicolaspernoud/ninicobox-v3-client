@@ -4,9 +4,9 @@ import { environment } from '../../../environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { AddAppDialogComponent } from './add-app-dialog/add-app-dialog.component';
-import { switchMap } from 'rxjs/operators';
 import { appAnimations } from '../../animations';
 import { AuthService } from '../../services/auth.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-apps',
@@ -19,7 +19,7 @@ export class AppsComponent implements OnInit {
   public apps: ClientApp[];
 
   // tslint:disable-next-line:max-line-length
-  constructor(private appsService: AppsService, private authService: AuthService, private sanitizer: DomSanitizer, public dialog: MatDialog) { }
+  constructor(private appsService: AppsService, private authService: AuthService, private usersService: UsersService, private sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.appsService.getApps()
@@ -41,38 +41,44 @@ export class AppsComponent implements OnInit {
       serve: '',
       secured: false,
       icon: 'home',
-      rank: this.apps.length,
+      rank: this.apps.length + 1,
       iframed: false,
       iframepath: '',
       login: '',
-      password: ''
+      password: '',
+      roles: []
     };
-    const dialogRef = this.dialog.open(AddAppDialogComponent, { data: newApp });
-    dialogRef.afterClosed().subscribe(app => {
-      if (app) {
-        app.completeUrl = this.getIFrameUrl(app);
-        this.apps.push(app);
-        this.apps.sort((a, b) => a.rank - b.rank);
-        this.save();
-      }
+    // get existing roles from user service
+    this.usersService.getRoles().subscribe(roles => {
+      const dialogRef = this.dialog.open(AddAppDialogComponent, { data: { App: newApp, RolesList: roles } });
+      dialogRef.afterClosed().subscribe(app => {
+        if (app) {
+          app.completeUrl = this.getIFrameUrl(app);
+          this.apps.push(app);
+          this.apps.sort((a, b) => a.rank - b.rank);
+          this.save();
+        }
+      });
     });
   }
 
   edit(app: ClientApp) {
-    const dialogRef = this.dialog.open(AddAppDialogComponent, { data: app });
-    dialogRef.afterClosed().subscribe(data => {
-      if (data) {
-        const editedApp = this.apps.find(value => value.name === app.name);
-        Object.assign(editedApp, data);
-        editedApp.completeUrl = this.getIFrameUrl(editedApp);
-        this.apps.sort((a, b) => a.rank - b.rank);
-        this.save();
-      }
+    this.usersService.getRoles().subscribe(roles => {
+      const dialogRef = this.dialog.open(AddAppDialogComponent, { data: { App: app, RolesList: roles } });
+      dialogRef.afterClosed().subscribe(data => {
+        if (data) {
+          const editedApp = this.apps.find(value => value.name === app.name);
+          Object.assign(editedApp, data);
+          editedApp.completeUrl = this.getIFrameUrl(editedApp);
+          this.apps.sort((a, b) => a.rank - b.rank);
+          this.save();
+        }
+      });
     });
   }
 
   save() {
-    this.appsService.setApps(this.apps).subscribe(data => { }, err => {
+    this.appsService.setApps(this.apps).subscribe(() => { }, err => {
       console.log(err);
     });
   }

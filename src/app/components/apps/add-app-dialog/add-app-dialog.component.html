@@ -1,71 +1,93 @@
 <h1 mat-dialog-title>Add/Edit service</h1>
 <mat-dialog-content>
   <mat-form-field>
-    <input matInput #name [value]="data.name">
+    <input matInput #name [value]="data.App.name">
     <mat-placeholder>
-      <mat-icon>edit</mat-icon>Service name</mat-placeholder>
+      <mat-icon>edit</mat-icon>
+      Service name
+    </mat-placeholder>
   </mat-form-field>
   <mat-form-field>
-    <input matInput #host [value]="data.host">
+    <input matInput #host [value]="data.App.host">
     <mat-placeholder>
-      <mat-icon>place</mat-icon>Host name</mat-placeholder>
+      <mat-icon>place</mat-icon>
+      Host name
+    </mat-placeholder>
   </mat-form-field>
-  <mat-checkbox #isProxy [(ngModel)]="data.isProxy">Proxy service</mat-checkbox>
-  <mat-form-field [style.display]="data.isProxy ? '' : 'none'">
-    <input matInput #forwardTo [value]="data.forwardTo">
+  <mat-checkbox #isProxy [(ngModel)]="data.App.isProxy">Proxy service</mat-checkbox>
+  <mat-form-field [style.display]="data.App.isProxy ? '' : 'none'">
+    <input matInput #forwardTo [value]="data.App.forwardTo">
     <mat-placeholder>
-      <mat-icon>navigation</mat-icon>Proxy to</mat-placeholder>
+      <mat-icon>navigation</mat-icon>
+      Proxy to
+    </mat-placeholder>
   </mat-form-field>
-  <mat-form-field [style.display]="!data.isProxy ? '' : 'none'">
-    <input matInput #serve [value]="data.serve">
+  <mat-form-field [style.display]="!data.App.isProxy ? '' : 'none'">
+    <input matInput #serve [value]="data.App.serve">
     <mat-placeholder>
-      <mat-icon>folder</mat-icon>Served directory</mat-placeholder>
+      <mat-icon>folder</mat-icon>
+      Served directory
+    </mat-placeholder>
   </mat-form-field>
-  <mat-checkbox #secured [(ngModel)]="data.secured">Secured by JWT</mat-checkbox>
-  <mat-form-field>
-    <mat-select #icon placeholder="App icon" [(value)]="data.icon">
-      <mat-select-trigger>
-        <mat-icon>{{ data.icon }}</mat-icon>
-      </mat-select-trigger>
-      <mat-option *ngFor="let icon of icons" [value]="icon.value">
-        <mat-icon>{{ icon.name }}</mat-icon>
-      </mat-option>
+  <mat-checkbox #secured [(ngModel)]="data.App.secured">Secured by JWT</mat-checkbox>
+  <mat-form-field [style.display]="data.App.secured ? '' : 'none'">
+    <mat-select #roles placeholder="Allowed roles" multiple [(ngModel)]="data.App.roles">
+    <mat-option *ngFor="let role of data.RolesList" [value]="role">{{role}}</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="number" #rank [value]="!!data.rank ? data.rank : 0">
-    <mat-placeholder>
-      <mat-icon>sort</mat-icon>Service display rank</mat-placeholder>
-  </mat-form-field>
-  <mat-checkbox #iFramed [(ngModel)]="data.iframed">Display in iframe</mat-checkbox>
-  <mat-form-field>
-    <input matInput #iFramePath [value]="data.iframepath">
-    <mat-placeholder>
-      <mat-icon>map</mat-icon>Displayed path in iframe</mat-placeholder>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput #login [value]="data.login">
-    <mat-placeholder>
-      <mat-icon>account_circle</mat-icon>Login</mat-placeholder>
+    <mat-select #icon placeholder="App icon" [(value)]="data.App.icon">
+    <mat-select-trigger>
+      <mat-icon>{{ data.App.icon }}</mat-icon>
+    </mat-select-trigger>
+    <mat-option *ngFor="let icon of icons" [value]="icon.value">
+    <mat-icon>{{ icon.name }}</mat-icon>
+    </mat-option>
+    </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <input matInput #password [value]="data.password">
+    <input matInput type="number" #rank [value]="!!data.App.rank ? data.App.rank : 0">
     <mat-placeholder>
-      <mat-icon>vpn_key</mat-icon>Password</mat-placeholder>
+      <mat-icon>sort</mat-icon>
+      Service display rank
+    </mat-placeholder>
+  </mat-form-field>
+  <mat-checkbox #iFramed [(ngModel)]="data.App.iframed">Display in iframe</mat-checkbox>
+  <mat-form-field>
+    <input matInput #iFramePath [value]="data.App.iframepath">
+    <mat-placeholder>
+      <mat-icon>map</mat-icon>
+      Displayed path in iframe
+    </mat-placeholder>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput #login [value]="data.App.login">
+    <mat-placeholder>
+      <mat-icon>account_circle</mat-icon>
+      Login
+    </mat-placeholder>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput #password [value]="data.App.password">
+    <mat-placeholder>
+      <mat-icon>vpn_key</mat-icon>
+      Password
+    </mat-placeholder>
   </mat-form-field>
 </mat-dialog-content>
 <button mat-raised-button color="primary" (click)="dialogRef.close({
-      name: name.value,
-      host: host.value,
-      isProxy: isProxy.checked,
-      forwardTo: isProxy.checked ? forwardTo.value : '',
-      serve: !isProxy.checked ? serve.value : '',
-      secured: secured.checked,
-      icon: icon.value,
-      rank: rank.value,
-      iframed: iFramed.checked,
-      iframepath: iFramePath.value,
-      login: login.value,
-      password: password.value
-    })">Save</button>
+  name: name.value,
+  host: host.value,
+  isProxy: isProxy.checked,
+  forwardTo: isProxy.checked ? forwardTo.value : '',
+  serve: !isProxy.checked ? serve.value : '',
+  secured: secured.checked,
+  icon: icon.value,
+  rank: rank.value,
+  iframed: iFramed.checked,
+  iframepath: iFramePath.value,
+  login: login.value,
+  password: password.value,
+  roles: secured.checked ? data.App.roles : []
+  })">Save</button>
 <button mat-raised-button (click)="dialogRef.close()">Close dialog</button>

@@ -13,6 +13,7 @@ export interface App {
     iframepath?: string;
     login?: string;
     password?: string;
+    roles: string[];
 }
 
 export class FilesACL {

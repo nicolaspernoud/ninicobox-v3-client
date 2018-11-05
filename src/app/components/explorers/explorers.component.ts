@@ -20,10 +20,9 @@ export class ExplorersComponent implements OnInit {
 
   ngOnInit() {
     this.filesACLsService.getFilesACLs().subscribe(data => {
-      data.filter(value => value.roles.includes(this.authService.getRoleFromToken()) && !value.basicauth)
-        .map(value => {
-          this.filesacls.push(new FilesACL(value));
-        });
+      data.map(value => {
+        this.filesacls.push(new FilesACL(value));
+      });
     });
   }
 

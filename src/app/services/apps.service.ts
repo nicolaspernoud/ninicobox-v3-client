@@ -12,13 +12,11 @@ import { handleHTTPError } from '../utility_functions';
 @Injectable()
 export class AppsService {
 
-  private endpoint = `${environment.apiEndPoint}/admin/apps`;
-
   constructor(private http: HttpClient) { }
 
   getApps(): Observable<App[]> {
     return this.http
-      .get<App[]>(this.endpoint).pipe(
+      .get<App[]>(`${environment.apiEndPoint}/common/apps`).pipe(
       catchError(handleHTTPError));
   }
 
@@ -31,7 +29,7 @@ export class AppsService {
     }
     );
     return this.http
-      .post<ClientApp[]>(this.endpoint, sendApps).pipe(
+      .post<ClientApp[]>(`${environment.apiEndPoint}/admin/apps`, sendApps).pipe(
       catchError(handleHTTPError));
   }
 
