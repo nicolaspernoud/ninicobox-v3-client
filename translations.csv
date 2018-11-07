@@ -1,6 +1,7 @@
  done; : effectué
 Add/Edit service;Ajouter/Éditer un service
 Allowed roles;Rôles autorisés
+App icon;Icone
 Are you sure \?;Êtes-vous sûr ?
 Authentication error;Erreur d'authentification
 Browser not compatible;Navigateur incompatible
@@ -35,7 +36,6 @@ Secured by JWT;Sécurisé par JWT
 Served directory;Dossier servi
 Server communication error;Erreur de communication avec le serveur
 Service display rank;Ordre d'affichage
-Service icon;Icone
 Service name;Nom du service
 Session expired, please login.;Session terminée, veuillez vous reconnecter.
 Share;Partager

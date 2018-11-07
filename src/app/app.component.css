@@ -25,9 +25,14 @@ mat-sidenav {
 }
 
 .version {
-    padding: 16px;
+    padding: 15px;
     display: flex;
-    flex-direction: line;
+    justify-content: center;
+    align-items: center;
+}
+
+.version button {
+    margin-left: 10px;
 }
 
 .mat-nav-list .mat-list-item-focus {

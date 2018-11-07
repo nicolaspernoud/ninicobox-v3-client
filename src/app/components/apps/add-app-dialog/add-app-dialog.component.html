@@ -2,32 +2,20 @@
 <mat-dialog-content>
   <mat-form-field>
     <input matInput #name [value]="data.App.name">
-    <mat-placeholder>
-      <mat-icon>edit</mat-icon>
-      Service name
-    </mat-placeholder>
+    <mat-placeholder><mat-icon>edit</mat-icon>Service name</mat-placeholder>
   </mat-form-field>
   <mat-form-field>
     <input matInput #host [value]="data.App.host">
-    <mat-placeholder>
-      <mat-icon>place</mat-icon>
-      Host name
-    </mat-placeholder>
+    <mat-placeholder><mat-icon>place</mat-icon>Host name</mat-placeholder>
   </mat-form-field>
   <mat-checkbox #isProxy [(ngModel)]="data.App.isProxy">Proxy service</mat-checkbox>
   <mat-form-field [style.display]="data.App.isProxy ? '' : 'none'">
     <input matInput #forwardTo [value]="data.App.forwardTo">
-    <mat-placeholder>
-      <mat-icon>navigation</mat-icon>
-      Proxy to
-    </mat-placeholder>
+    <mat-placeholder><mat-icon>navigation</mat-icon>Proxy to</mat-placeholder>
   </mat-form-field>
   <mat-form-field [style.display]="!data.App.isProxy ? '' : 'none'">
     <input matInput #serve [value]="data.App.serve">
-    <mat-placeholder>
-      <mat-icon>folder</mat-icon>
-      Served directory
-    </mat-placeholder>
+    <mat-placeholder><mat-icon>folder</mat-icon>Served directory</mat-placeholder>
   </mat-form-field>
   <mat-checkbox #secured [(ngModel)]="data.App.secured">Secured by JWT</mat-checkbox>
   <mat-form-field [style.display]="data.App.secured ? '' : 'none'">
@@ -47,32 +35,20 @@
   </mat-form-field>
   <mat-form-field>
     <input matInput type="number" #rank [value]="!!data.App.rank ? data.App.rank : 0">
-    <mat-placeholder>
-      <mat-icon>sort</mat-icon>
-      Service display rank
-    </mat-placeholder>
+    <mat-placeholder><mat-icon>sort</mat-icon>Service display rank</mat-placeholder>
   </mat-form-field>
   <mat-checkbox #iFramed [(ngModel)]="data.App.iframed">Display in iframe</mat-checkbox>
   <mat-form-field>
     <input matInput #iFramePath [value]="data.App.iframepath">
-    <mat-placeholder>
-      <mat-icon>map</mat-icon>
-      Displayed path in iframe
-    </mat-placeholder>
+    <mat-placeholder><mat-icon>map</mat-icon>Displayed path in iframe</mat-placeholder>
   </mat-form-field>
   <mat-form-field>
     <input matInput #login [value]="data.App.login">
-    <mat-placeholder>
-      <mat-icon>account_circle</mat-icon>
-      Login
-    </mat-placeholder>
+    <mat-placeholder><mat-icon>account_circle</mat-icon>Login</mat-placeholder>
   </mat-form-field>
   <mat-form-field>
     <input matInput #password [value]="data.App.password">
-    <mat-placeholder>
-      <mat-icon>vpn_key</mat-icon>
-      Password
-    </mat-placeholder>
+    <mat-placeholder><mat-icon>vpn_key</mat-icon>Password</mat-placeholder>
   </mat-form-field>
 </mat-dialog-content>
 <button mat-raised-button color="primary" (click)="dialogRef.close({

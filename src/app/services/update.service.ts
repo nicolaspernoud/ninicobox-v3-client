@@ -16,4 +16,8 @@ export class UpdateService {
         });
         swUpdate.checkForUpdate(); // Check for updates at startup
     }
+
+    forceUpdate() {
+        this.swUpdate.activateUpdate().then(() => document.location.reload());
+    }
 }
