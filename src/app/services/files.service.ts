@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest, HttpEvent, HttpEventType } from '@angular/common/http';
 import { File } from '../interfaces';
-import { Observable, BehaviorSubject, bindCallback } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { map, last, catchError } from 'rxjs/operators';
 import { handleHTTPError } from '../utility_functions';
@@ -23,7 +23,6 @@ export class FilesService {
     constructor(private http: HttpClient) { }
 
     explore(path) {
-        const self = this;
         const depthheaders = new HttpHeaders({ 'Depth': '1' });
         return this.http.request('PROPFIND',
             `${this.host}${path}`,

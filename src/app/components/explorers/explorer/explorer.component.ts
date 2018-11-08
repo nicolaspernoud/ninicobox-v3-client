@@ -201,7 +201,7 @@ export class ExplorerComponent implements OnInit {
     }
 
     getType(file): string {
-        if (/(txt|md|csv|sh|nfo|log)$/.test(file.name.toLowerCase())) { return 'text'; }
+        if (/(txt|md|csv|sh|nfo|log|json)$/.test(file.name.toLowerCase())) { return 'text'; }
         if (/(jpg|png|gif|svg|jpeg)$/.test(file.name.toLowerCase())) { return 'image'; }
         if (/(mp3|wav|ogg)$/.test(file.name.toLowerCase())) { return 'audio'; }
         if (/(mp4|avi|mkv)$/.test(file.name.toLowerCase())) { return 'video'; }
