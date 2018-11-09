@@ -46,6 +46,7 @@ export class AppComponent implements OnInit {
       const loaded_client_ver = this.loaded_client_version.split(".").map(value => Number(value));
       this.cumulativeVersion = `${String(server_ver[0])}.${String(server_ver[1] + loaded_client_ver[1])}.${String(server_ver[2] + loaded_client_ver[2])}`
     });
+    this.update.UpdateAvailable.subscribe(value => this.updateAvailable = value);
   }
 
   logout() {
