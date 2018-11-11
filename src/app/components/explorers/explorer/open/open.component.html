@@ -9,7 +9,7 @@
         <source [src]="data.url">
     </video>
     <mat-form-field *ngIf="data.fileType === 'text'">
-        <textarea matInput [value]="data.content"></textarea>
+        <textarea matInput [value]="data.content" [readonly]="!data.editMode"></textarea>
     </mat-form-field>
     <div class="buttons">
         <button mat-raised-button (click)="dialogRef.close()">Close dialog</button>
