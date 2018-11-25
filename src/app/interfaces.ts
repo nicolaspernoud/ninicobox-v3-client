@@ -44,6 +44,7 @@ export interface User {
     name?: string;
     surname?: string;
     role: string;
+    longLivedToken: boolean;
     passwordHash?: string;
     password?: string;
 }

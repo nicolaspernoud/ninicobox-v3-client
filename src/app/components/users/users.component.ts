@@ -27,6 +27,7 @@ export class UsersComponent implements OnInit {
       login: 'newLogin',
       password: randomString(48),
       role: 'user',
+      longLivedToken: false
     };
     this.users.push(newUser);
   }

@@ -20,6 +20,7 @@
       <mat-placeholder>
         <mat-icon>security</mat-icon>Role</mat-placeholder>
     </mat-form-field>
+    <mat-checkbox #secured [(ngModel)]="user.longLivedToken">Extended sessions</mat-checkbox>
     <mat-form-field>
       <input matInput type="text" [(ngModel)]="user.name" />
       <mat-placeholder>
