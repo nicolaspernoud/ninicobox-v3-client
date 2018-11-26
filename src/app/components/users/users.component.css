@@ -5,3 +5,7 @@
 mat-card {
     margin-bottom: 10px;
 }
+
+mat-checkbox {
+    margin: 0px 5px 0px 5px;
+ }
