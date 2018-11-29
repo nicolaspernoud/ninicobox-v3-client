@@ -20,11 +20,14 @@ export class UpdateService {
                     this.updateAvailable.next(false);
                 });
         });
-        swUpdate.checkForUpdate(); // Check for updates at startup
     }
 
     forceUpdate() {
         this.swUpdate.activateUpdate().then(() => document.location.reload());
         this.updateAvailable.next(false);
+    }
+
+    checkForUpdate() {
+        this.swUpdate.checkForUpdate();
     }
 }

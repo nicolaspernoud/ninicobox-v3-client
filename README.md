@@ -3,7 +3,7 @@
 ## Installation
 
 See : https://github.com/nicolaspernoud/ninicobox-v3-deploy
-Client made with Angular 6 and Material Design.
+Client made with Angular 7 and Material Design.
 
 ## Code scaffolding
 

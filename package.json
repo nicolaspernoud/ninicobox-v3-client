@@ -1,6 +1,6 @@
 {
   "name": "ninicobox-client",
-  "version": "3.0.18",
+  "version": "3.0.19",
   "description": "Client for NinicoBox",
   "repository": {
     "type": "git",
@@ -19,19 +19,19 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^7.0.2",
-    "@angular/cdk": "^7.0.3",
-    "@angular/common": "^7.0.2",
-    "@angular/compiler": "^7.0.2",
-    "@angular/core": "^7.0.2",
-    "@angular/forms": "^7.0.2",
-    "@angular/http": "^7.0.2",
-    "@angular/material": "^7.0.3",
-    "@angular/platform-browser": "^7.0.2",
-    "@angular/platform-browser-dynamic": "^7.0.2",
+    "@angular/animations": "^7.1.1",
+    "@angular/cdk": "^7.1.0",
+    "@angular/common": "^7.1.1",
+    "@angular/compiler": "^7.1.1",
+    "@angular/core": "^7.1.1",
+    "@angular/forms": "^7.1.1",
+    "@angular/http": "^7.1.1",
+    "@angular/material": "^7.1.0",
+    "@angular/platform-browser": "^7.1.1",
+    "@angular/platform-browser-dynamic": "^7.1.1",
     "@angular/pwa": "^0.7.5",
-    "@angular/router": "^7.0.2",
-    "@angular/service-worker": "^7.0.2",
+    "@angular/router": "^7.1.1",
+    "@angular/service-worker": "^7.1.1",
     "core-js": "^2.5.6",
     "jwt-decode": "^2.2.0",
     "rxjs": "^6.3.3",
@@ -41,9 +41,9 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.7.5",
-    "@angular/cli": "^7.0.4",
-    "@angular/compiler-cli": "^7.0.2",
-    "@angular/language-service": "^7.0.2",
+    "@angular/cli": "^7.1.0",
+    "@angular/compiler-cli": "^7.1.1",
+    "@angular/language-service": "^7.1.1",
     "@types/jasmine": "~2.8.7",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~10.9.4",
@@ -58,6 +58,6 @@
     "protractor": "^5.4.0",
     "ts-node": "~7.0.1",
     "tslint": "~5.11.0",
-    "typescript": "^3.1.5"
+    "typescript": "^3.1.6"
   }
 }
