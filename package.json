@@ -1,6 +1,6 @@
 {
   "name": "ninicobox-client",
-  "version": "3.0.20",
+  "version": "3.0.21",
   "description": "Client for NinicoBox",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --ssl true --ssl-key ./dev_certificates/localhost.key --ssl-cert ./dev_certificates/localhost.crt",
-    "build": "ng build --prod --build-optimizer",
+    "build": "ng build --prod --build-optimizer --base-href=/static/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

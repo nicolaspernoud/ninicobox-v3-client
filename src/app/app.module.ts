@@ -7,6 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { APP_BASE_HREF } from '@angular/common';
 // Material module
 import { MaterialModule } from './material.module';
 // Technical modules
@@ -75,6 +76,10 @@ import { AppFilterIframed } from './components/apps/appfilteriframed.pipe';
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
       multi: true
+    },
+    {
+      provide: APP_BASE_HREF,
+      useValue: '/'
     },
     AuthService,
     UpdateService,

@@ -11,12 +11,6 @@ export const routes: Routes = [
         component: LoginComponent,
     },
     {
-        path: '',
-        redirectTo: '/explorer',
-        pathMatch: 'full',
-        canActivate: [RouteGuard]
-    },
-    {
         path: 'explorer',
         component: ExplorersComponent,
         pathMatch: 'full',
@@ -31,6 +25,12 @@ export const routes: Routes = [
     {
         path: 'users',
         component: UsersComponent,
+        pathMatch: 'full',
+        canActivate: [RouteGuard]
+    },
+    {
+        path: '**',
+        redirectTo: '/explorer',
         pathMatch: 'full',
         canActivate: [RouteGuard]
     }
