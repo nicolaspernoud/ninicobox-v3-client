@@ -1,6 +1,6 @@
 {
   "name": "ninicobox-client",
-  "version": "3.0.22",
+  "version": "3.0.23",
   "description": "Client for NinicoBox",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "translate-and-patchsw": "node translate && node patchsw && ngsw-config dist ngsw-config.json"
+    "translate-and-patchsw": "node translate && node patchsw && ngsw-config dist ngsw-config.json /static/"
   },
   "private": true,
   "dependencies": {
