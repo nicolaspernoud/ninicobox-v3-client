@@ -64,7 +64,7 @@ import { AppFilterIframed } from './components/apps/appfilteriframed.pipe';
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
     MaterialModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {
