@@ -1,6 +1,6 @@
 {
   "name": "ninicobox-client",
-  "version": "3.0.23",
+  "version": "3.0.24",
   "description": "Client for NinicoBox",
   "repository": {
     "type": "git",
@@ -11,11 +11,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --ssl true --ssl-key ./dev_certificates/localhost.key --ssl-cert ./dev_certificates/localhost.crt",
-    "build": "ng build --prod --build-optimizer --base-href=/static/",
+    "build": "ng build --prod --build-optimizer",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "translate-and-patchsw": "node translate && node patchsw && ngsw-config dist ngsw-config.json /static/"
+    "translate-and-patchsw": "node translate && node patchsw && ngsw-config dist ngsw-config.json"
   },
   "private": true,
   "dependencies": {
