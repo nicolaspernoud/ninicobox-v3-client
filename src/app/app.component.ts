@@ -13,7 +13,6 @@ import * as packageJson from '../../package.json';
   animations: [appAnimations]
 })
 export class AppComponent implements OnInit {
-  title = 'NinicoBox';
   isDarkTheme: boolean;
   infos: Infos = {
     server_version: '...',
