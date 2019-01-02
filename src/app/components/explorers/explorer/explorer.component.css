@@ -1,6 +1,6 @@
 :host {
     display: flex;
-    flex-direction:  column;
+    flex-direction: column;
 }
 
 mat-spinner {
@@ -9,4 +9,17 @@ mat-spinner {
 
 .actions-fabs {
     margin-top: 10px;
+}
+
+.bouncing {
+    overflow: visible !important;
+    animation-name: bounce;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+    50% {
+        transform: translateX(-75%)
+    }
 }

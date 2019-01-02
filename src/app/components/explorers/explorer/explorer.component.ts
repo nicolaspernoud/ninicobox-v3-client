@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { FilesService, } from '../../../services/files.service';
 import { environment } from '../../../../environments/environment';
 import { File } from '../../../interfaces';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar, MatListItem } from '@angular/material';
 import { RenameDialogComponent } from './rename-dialog/rename-dialog.component';
 import { switchMap } from 'rxjs/operators';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -213,6 +213,13 @@ export class ExplorerComponent implements OnInit {
         const i = file.size === 0 ? 0 : Math.floor(Math.log(file.size) / Math.log(1024));
         const size = (file.size / Math.pow(1024, i)).toFixed(2) + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
         return `${size} - ${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
+    }
+
+    mustBounce(element: HTMLElement, file: any): boolean {
+        if (typeof file.mustBounce === 'undefined') {
+            file.mustBounce = file.name.length * 7 > element.clientWidth;
+        }
+        return file.mustBounce;
     }
 }
 
