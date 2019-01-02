@@ -2,10 +2,9 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { FilesService, } from '../../../services/files.service';
 import { environment } from '../../../../environments/environment';
 import { File } from '../../../interfaces';
-import { MatDialog, MatSnackBar, MatListItem } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { RenameDialogComponent } from './rename-dialog/rename-dialog.component';
 import { switchMap } from 'rxjs/operators';
-import { trigger, transition, style, animate } from '@angular/animations';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 import { OpenComponent } from './open/open.component';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -70,10 +69,10 @@ export class ExplorerComponent implements OnInit {
         }
         if (isDir) {
             this.fileService.createDir(this.currentPath, newFileName)
-                .pipe(switchMap(data => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
+                .pipe(switchMap(() => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
         } else {
             this.fileService.setContent(this.currentPath + '/' + encodeURI(newFileName), '')
-                .pipe(switchMap(data => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
+                .pipe(switchMap(() => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
         }
     }
 
@@ -97,7 +96,7 @@ export class ExplorerComponent implements OnInit {
             if (fileAfterRename && fileAfterRename.name) {
                 const newPath = `${this.currentPath}/${encodeURI(fileAfterRename.name)}`;
                 this.fileService.renameOrCopy(file.path, newPath, false)
-                    .pipe(switchMap(data => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
+                    .pipe(switchMap(() => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
             }
         });
     }
@@ -118,7 +117,7 @@ export class ExplorerComponent implements OnInit {
                     dialogRef.afterClosed().subscribe(newContent => {
                         if (newContent) {
                             this.fileService.setContent(file.path, newContent.content)
-                                .pipe(switchMap(value => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
+                                .pipe(switchMap(() => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
                         }
                     });
                 }
@@ -160,7 +159,7 @@ export class ExplorerComponent implements OnInit {
         const action = this.cutCopyFile[1] === true ? 'Copy' : 'Cut';
         this.snackBar.openFromComponent(CutCopyProgressBarComponent);
         this.fileService.renameOrCopy(this.cutCopyFile[0].path, newPath, this.cutCopyFile[1])
-            .pipe(switchMap(data => this.exploreCurrentDirectory())).subscribe(this.displayFiles(action));
+            .pipe(switchMap(() => this.exploreCurrentDirectory())).subscribe(this.displayFiles(action));
         this.cutCopyFile = undefined;
     }
 
@@ -191,12 +190,12 @@ export class ExplorerComponent implements OnInit {
         dialogRef.afterClosed().subscribe(confirmed => {
             if (confirmed) {
                 this.fileService.delete(file.path, file.isDir)
-                    .pipe(switchMap(data => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
+                    .pipe(switchMap(() => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
             }
         });
     }
 
-    onUploadComplete(name) {
+    onUploadComplete() {
         this.exploreCurrentDirectory().subscribe(this.displayFiles('Upload'));
     }
 
@@ -217,7 +216,7 @@ export class ExplorerComponent implements OnInit {
 
     mustBounce(element: HTMLElement, file: any): boolean {
         if (typeof file.mustBounce === 'undefined') {
-            file.mustBounce = file.name.length * 7 > element.clientWidth;
+            file.mustBounce = file.name.length * 8 > element.clientWidth;
         }
         return file.mustBounce;
     }
