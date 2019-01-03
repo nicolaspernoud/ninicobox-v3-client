@@ -14,7 +14,7 @@ mat-spinner {
 .bouncing {
     overflow: visible !important;
     animation-name: bounce;
-    animation-duration: 10s;
+    animation-duration: 5s;
     animation-iteration-count: infinite;
 }
 
