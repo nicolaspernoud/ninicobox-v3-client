@@ -35,8 +35,8 @@ export class ExplorersComponent implements OnInit {
 
   getColor(acl: FilesACL): string {
     const percentFull = this.getPercentFull(acl);
-    if (percentFull > 75) return "warn";
-    if (percentFull > 60) return "accent";
+    if (percentFull > 85) return "warn";
+    if (percentFull > 65) return "accent";
     return "primary";
   }
 
