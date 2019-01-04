@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ExplorerComponent } from './explorer/explorer.component';
 import { FilesACLsService } from '../../services/filesacls.service';
 import { AuthService } from '../../services/auth.service';
 import { FilesACL } from '../../interfaces';
@@ -28,6 +27,17 @@ export class ExplorersComponent implements OnInit {
 
   currentPathChanged(event: [string, string]) {
     this.filesacls.find(value => value.name === event[0]).currentPath = event[1];
+  }
+
+  getPercentFull(acl: FilesACL): number {
+    return acl.usedgb * 100 / acl.totalgb;
+  }
+
+  getColor(acl: FilesACL): string {
+    const percentFull = this.getPercentFull(acl);
+    if (percentFull > 75) return "warn";
+    if (percentFull > 60) return "accent";
+    return "primary";
   }
 
 }

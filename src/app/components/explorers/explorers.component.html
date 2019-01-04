@@ -5,7 +5,7 @@
                 {{filesacl.name}}
             </mat-panel-title>
             <mat-panel-description>
-                <mat-progress-bar mode="determinate" [value]="filesacl.usedgb * 100 / filesacl.totalgb"></mat-progress-bar>
+                <mat-progress-bar mode="determinate" [color]="getColor(filesacl)" [value]="getPercentFull(filesacl)"></mat-progress-bar>
                 {{filesacl.usedgb}} / {{filesacl.totalgb}} GB
             </mat-panel-description>
             <mat-panel-description [innerHTML]="filesacl.displayedPath() | keepHtml">
