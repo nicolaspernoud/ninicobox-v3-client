@@ -1,3 +1,18 @@
 :host {
     width: 100%;
 }
+
+mat-panel-description {
+    align-items: center;
+    font-size: 12px;
+}
+
+mat-panel-title {
+    align-items: center;
+    flex-grow: 0;
+}
+
+mat-progress-bar {
+    width: 50px;
+    margin-right: 10px;
+}

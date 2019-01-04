@@ -23,6 +23,8 @@ export class FilesACL {
     permissions: string;
     currentPath?: string;
     basicauth?: boolean;
+    totalgb: number;
+    usedgb: number;
 
     constructor(data: any) {
         Object.assign(this, data);

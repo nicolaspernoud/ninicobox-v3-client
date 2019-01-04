@@ -4,11 +4,16 @@
             <mat-panel-title>
                 {{filesacl.name}}
             </mat-panel-title>
-            <mat-panel-title [innerHTML]="filesacl.displayedPath() | keepHtml">
-            </mat-panel-title>
+            <mat-panel-description>
+                <mat-progress-bar mode="determinate" [value]="filesacl.usedgb * 100 / filesacl.totalgb"></mat-progress-bar>
+                {{filesacl.usedgb}} / {{filesacl.totalgb}} GB
+            </mat-panel-description>
+            <mat-panel-description [innerHTML]="filesacl.displayedPath() | keepHtml">
+            </mat-panel-description>
         </mat-expansion-panel-header>
         <ng-template matExpansionPanelContent>
-            <app-explorer [name]="filesacl.name" [permissions]="filesacl.permissions" [basePath]="filesacl.basePath()" [currentPath]="filesacl.currentPath"  (CurrentPathChanged)="currentPathChanged($event)"></app-explorer>
+            <app-explorer [name]="filesacl.name" [permissions]="filesacl.permissions" [basePath]="filesacl.basePath()"
+                [currentPath]="filesacl.currentPath" (CurrentPathChanged)="currentPathChanged($event)"></app-explorer>
         </ng-template>
     </mat-expansion-panel>
 </div>
