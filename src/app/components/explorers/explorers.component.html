@@ -4,7 +4,7 @@
             <mat-panel-title>
                 {{filesacl.name}}
             </mat-panel-title>
-            <mat-panel-description>
+            <mat-panel-description class="fixed-size-panel-description">
                 <mat-progress-bar mode="determinate" [color]="getColor(filesacl)" [value]="getPercentFull(filesacl)"></mat-progress-bar>
                 {{filesacl.usedgb}} / {{filesacl.totalgb}} GB
             </mat-panel-description>
