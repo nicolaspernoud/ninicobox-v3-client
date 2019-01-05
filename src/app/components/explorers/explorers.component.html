@@ -4,11 +4,11 @@
             <mat-panel-title>
                 {{filesacl.name}}
             </mat-panel-title>
-            <mat-panel-description class="fixed-size-panel-description">
+            <mat-panel-description *ngIf="!filesacl.displayedPath()" [@appear]>
                 <mat-progress-bar mode="determinate" [color]="getColor(filesacl)" [value]="getPercentFull(filesacl)"></mat-progress-bar>
                 {{filesacl.usedgb}} / {{filesacl.totalgb}} GB
             </mat-panel-description>
-            <mat-panel-description [innerHTML]="filesacl.displayedPath() | keepHtml">
+            <mat-panel-description *ngIf="filesacl.displayedPath()" #path [innerHTML]="filesacl.displayedPath() | keepHtml" [@appear]>
             </mat-panel-description>
         </mat-expansion-panel-header>
         <ng-template matExpansionPanelContent>

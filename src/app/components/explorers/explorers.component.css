@@ -13,11 +13,6 @@ mat-panel-description {
     font-size: 12px;
 }
 
-.fixed-size-panel-description {
-    flex: 0 0 auto;
-    width: 140px;
-}
-
 mat-progress-bar {
     width: 50px;
     margin-right: 10px;
