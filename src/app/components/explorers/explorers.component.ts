@@ -29,15 +29,14 @@ export class ExplorersComponent implements OnInit {
     this.filesacls.find(value => value.name === event[0]).currentPath = event[1];
   }
 
-  getPercentFull(acl: FilesACL): number {
-    return acl.usedgb * 100 / acl.totalgb;
-  }
-
-  getColor(acl: FilesACL): string {
-    const percentFull = this.getPercentFull(acl);
-    if (percentFull > 85) return "warn";
-    if (percentFull > 65) return "accent";
-    return "primary";
+  refreshDiskUsage() {
+    this.filesACLsService.getFilesACLs().subscribe(data => {
+      data.map(val => {
+        const acl = this.filesacls.find(value => value.name === val.name);
+        acl.usedgb = val.usedgb;
+        acl.totalgb = val.totalgb;
+      });
+    });
   }
 
 }

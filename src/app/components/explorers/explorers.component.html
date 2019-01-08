@@ -1,11 +1,11 @@
 <div class="vertical-flex-container" [@appear]>
-    <mat-expansion-panel *ngFor="let filesacl of filesacls">
+    <mat-expansion-panel *ngFor="let filesacl of filesacls" (mouseenter)="!filesacl.displayedPath() ? refreshDiskUsage() : ''">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 {{filesacl.name}}
             </mat-panel-title>
             <mat-panel-description *ngIf="!filesacl.displayedPath()" [@appear]>
-                <mat-progress-bar mode="determinate" [color]="getColor(filesacl)" [value]="getPercentFull(filesacl)"></mat-progress-bar>
+                <mat-progress-bar mode="determinate" [color]="filesacl.Color()" [value]="filesacl.PercentFull()"></mat-progress-bar>
                 {{filesacl.usedgb}} / {{filesacl.totalgb}} GB
             </mat-panel-description>
             <mat-panel-description *ngIf="filesacl.displayedPath()" #path [innerHTML]="filesacl.displayedPath() | keepHtml" [@appear]>

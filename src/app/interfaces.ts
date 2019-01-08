@@ -38,6 +38,17 @@ export class FilesACL {
     displayedPath() {
         return decodeURI(this.currentPath.slice(this.basePath().length)).replace(/\//g, '&nbsp;<span>▶</span>&nbsp;');
     }
+
+    PercentFull(): number {
+        return this.usedgb * 100 / this.totalgb;
+    }
+
+    Color(acl: FilesACL): string {
+        const percentFull = this.PercentFull();
+        if (percentFull > 85) return "warn";
+        if (percentFull > 65) return "accent";
+        return "primary";
+    }
 }
 
 export interface User {
