@@ -1,4 +1,5 @@
-<div class="vertical-flex-container" [@appear]>
+<mat-spinner *ngIf="loading" [diameter]="56" class="load-spinner"></mat-spinner>
+<div *ngIf="!loading" class="vertical-flex-container" [@appear]>
   <mat-card *ngFor="let user of users" tabindex="0">
     <mat-form-field>
       <input matInput type="number" [(ngModel)]="user.id" />

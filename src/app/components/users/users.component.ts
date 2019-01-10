@@ -14,11 +14,15 @@ import { appAnimations } from '../../animations';
 export class UsersComponent implements OnInit {
 
   public users: User[];
+  public loading = true;
 
   constructor(private usersService: UsersService) { }
 
   ngOnInit() {
-    this.usersService.getUsers().subscribe(data => this.users = data);
+    this.usersService.getUsers().subscribe(data => {
+      this.users = data;
+      this.loading = false;
+    });
   }
 
   addUser() {

@@ -17,6 +17,7 @@ import { UsersService } from 'src/app/services/users.service';
 export class AppsComponent implements OnInit {
 
   public apps: ClientApp[];
+  public loading = true;
 
   // tslint:disable-next-line:max-line-length
   constructor(private appsService: AppsService, private authService: AuthService, private usersService: UsersService, private sanitizer: DomSanitizer, public dialog: MatDialog) { }
@@ -27,6 +28,7 @@ export class AppsComponent implements OnInit {
         this.apps = data.map(app => (
           { ...app, completeUrl: this.getIFrameUrl(app) }
         ));
+        this.loading = false;
       }, err => {
         console.log(err);
       });

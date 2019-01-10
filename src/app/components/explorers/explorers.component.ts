@@ -14,6 +14,7 @@ import { appAnimations } from '../../animations';
 export class ExplorersComponent implements OnInit {
 
   public filesacls: FilesACL[] = [];
+  public loading = true;
 
   constructor(private filesACLsService: FilesACLsService, private authService: AuthService) { }
 
@@ -22,6 +23,7 @@ export class ExplorersComponent implements OnInit {
       data.map(value => {
         this.filesacls.push(new FilesACL(value));
       });
+      this.loading = false;
     });
   }
 
