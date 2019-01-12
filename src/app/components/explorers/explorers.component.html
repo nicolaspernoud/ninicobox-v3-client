@@ -1,5 +1,5 @@
 <mat-spinner *ngIf="loading" [diameter]="56" class="load-spinner"></mat-spinner>
-<div *ngIf="!loading" class="vertical-flex-container" [@appear]>
+<div *ngIf="!loading" class="vertical-container">
     <mat-expansion-panel *ngFor="let filesacl of filesacls" (mouseenter)="!filesacl.displayedPath() ? refreshDiskUsage() : ''">
         <mat-expansion-panel-header>
             <mat-panel-title>

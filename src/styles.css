@@ -8,6 +8,8 @@ body {
 
 .mat-card {
     padding: 12px !important;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .nopadding .mat-expansion-panel-body {
@@ -19,6 +21,14 @@ body {
     align-items: center !important;
 }
 
+.vertical-container {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100%;
+}
+
 .horizontal-flex-container {
     display: flex;
     justify-content: center;
@@ -26,19 +36,14 @@ body {
     flex-direction: line;
 }
 
-.vertical-flex-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
 mat-expansion-panel {
     width: 100%;
-    margin-bottom: 5px !important;
+    margin-bottom: 10px !important;
 }
 
-.mat-mini-fab, .mat-raised-button, mat-form-field {
+.mat-mini-fab,
+.mat-raised-button,
+mat-form-field {
     margin: 0px 5px 0px 5px !important;
 }
 
@@ -52,6 +57,18 @@ mat-expansion-panel {
     filter: drop-shadow( 0px 0px 5px white);
 }
 
-.vertical-flex-container {
+router-outlet~* {
+    position: absolute;
+    top: 84px;
+    height: calc(100% - 84px);
     width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-toolbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
 }

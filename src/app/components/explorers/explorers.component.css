@@ -1,9 +1,3 @@
-:host {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
 mat-panel-title {
     align-items: center;
     flex: 0 0 auto;
