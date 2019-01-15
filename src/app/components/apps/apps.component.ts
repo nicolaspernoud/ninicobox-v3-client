@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AppsService, ClientApp } from '../../services/apps.service';
-import { environment } from '../../../environments/environment';
-import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { AddAppDialogComponent } from './add-app-dialog/add-app-dialog.component';
 import { appAnimations } from '../../animations';
@@ -20,15 +18,16 @@ export class AppsComponent implements OnInit {
   public loading = true;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private appsService: AppsService, private authService: AuthService, private usersService: UsersService, private sanitizer: DomSanitizer, public dialog: MatDialog) { }
+  constructor(private appsService: AppsService, private usersService: UsersService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.appsService.getApps()
       .subscribe(data => {
-        this.apps = data.map(app => (
-          { ...app, completeUrl: this.getIFrameUrl(app) }
-        ));
+        this.apps = data;
         this.loading = false;
+        for (let app of this.apps) {
+          this.appsService.setIFrameUrl(app);
+        }
       }, err => {
         console.log(err);
       });
@@ -55,7 +54,7 @@ export class AppsComponent implements OnInit {
       const dialogRef = this.dialog.open(AddAppDialogComponent, { data: { App: newApp, RolesList: roles } });
       dialogRef.afterClosed().subscribe(app => {
         if (app) {
-          app.completeUrl = this.getIFrameUrl(app);
+          this.appsService.setIFrameUrl(app);
           this.apps.push(app);
           this.apps.sort((a, b) => a.rank - b.rank);
           this.save();
@@ -71,7 +70,7 @@ export class AppsComponent implements OnInit {
         if (data) {
           const editedApp = this.apps.find(value => value.name === app.name);
           Object.assign(editedApp, data);
-          editedApp.completeUrl = this.getIFrameUrl(editedApp);
+          this.appsService.setIFrameUrl(app);
           this.apps.sort((a, b) => a.rank - b.rank);
           this.save();
         }
@@ -88,14 +87,5 @@ export class AppsComponent implements OnInit {
   delete(app: ClientApp) {
     this.apps.splice(this.apps.findIndex(value => value.host === app.host), 1);
     this.save();
-  }
-
-  getIFrameUrl(app: ClientApp) {
-    // tslint:disable-next-line:max-line-length
-    let url = `https://${app.host}${environment.port ? ':' + environment.port : ''}/${app.iframepath}`;
-    if (app.secured) {
-      url += `?token=${this.authService.getToken()}`;
-    }
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

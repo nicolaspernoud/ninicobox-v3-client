@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
-import { FilesService, } from '../../../services/files.service';
+import { FilesService, WantedToken, } from '../../../services/files.service';
 import { environment } from '../../../../environments/environment';
 import { File } from '../../../interfaces';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -123,7 +123,12 @@ export class ExplorerComponent implements OnInit {
                 }
             });
         } else if (fileType === 'audio' || fileType === 'video' || fileType === 'image' || fileType === 'other') {
-            this.fileService.getShareToken(file.path).subscribe(data => {
+            const wantedToken: WantedToken = {
+                sharedfor: "opening",
+                url:       file.path,
+                lifespan:  1,
+            }
+            this.fileService.getShareToken(wantedToken).subscribe(data => {
                 // tslint:disable-next-line:max-line-length
                 const url = this.sanitizer.bypassSecurityTrustResourceUrl(`${environment.host}${file.path}?token=${data}`);
                 const dialogRef = this.dialog.open(OpenComponent, {
@@ -164,7 +169,12 @@ export class ExplorerComponent implements OnInit {
     }
 
     download(file: File, share: boolean) {
-        this.fileService.getShareToken(file.path).subscribe(data => {
+        const wantedToken: WantedToken = {
+            sharedfor: "downloading",
+            url:       file.path,
+            lifespan:  7,
+        }
+        this.fileService.getShareToken(wantedToken).subscribe(data => {
             const shareURL = `${environment.host}${file.path}?token=${data}`;
             if (share) {
                 this.dialog.open(BasicDialogComponent, {

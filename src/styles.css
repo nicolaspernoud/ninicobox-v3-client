@@ -53,7 +53,8 @@ mat-form-field {
 }
 
 .load-spinner {
-    margin-top: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
     filter: drop-shadow( 0px 0px 5px white);
 }
 

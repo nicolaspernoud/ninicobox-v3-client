@@ -96,9 +96,9 @@ export class FilesService {
         return this.http.put(`${this.host}${path}`, content, { responseType: 'text' });
     }
 
-    getShareToken(path): Observable<string> {
+    getShareToken(wantedToken: WantedToken): Observable<string> {
         // tslint:disable-next-line:max-line-length
-        return this.http.post(`${environment.apiEndPoint}/common/getsharetoken`, path, { responseType: 'text' });
+        return this.http.post(`${environment.apiEndPoint}/common/getsharetoken`, wantedToken, { responseType: 'text' });
     }
 
     delete(path, isDir) {
@@ -140,4 +140,10 @@ export class FilesService {
 export interface UploadProgress {
     filename: string;
     progress: number;
+}
+
+export interface WantedToken {
+    sharedfor: string;
+    url:       string;
+    lifespan:  number;
 }
