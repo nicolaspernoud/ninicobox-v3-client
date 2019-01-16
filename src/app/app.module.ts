@@ -31,6 +31,7 @@ import { AppsComponent } from './components/apps/apps.component';
 import { UsersComponent } from './components/users/users.component';
 import { AddAppDialogComponent } from './components/apps/add-app-dialog/add-app-dialog.component';
 import { RenameDialogComponent } from './components/explorers/explorer/rename-dialog/rename-dialog.component';
+import { ShareDialogComponent } from './components/explorers/explorer/share-dialog/share-dialog.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { OpenComponent } from './components/explorers/explorer/open/open.component';
 import { BasicDialogComponent } from './components/basic-dialog/basic-dialog.component';
@@ -50,6 +51,7 @@ import { AppFilterIframed } from './components/apps/appfilteriframed.pipe';
     AddAppDialogComponent,
     UsersComponent,
     RenameDialogComponent,
+    ShareDialogComponent,
     ConfirmDialogComponent,
     OpenComponent,
     BasicDialogComponent,
@@ -84,6 +86,6 @@ import { AppFilterIframed } from './components/apps/appfilteriframed.pipe';
   ],
   bootstrap: [AppComponent],
   // tslint:disable-next-line:max-line-length
-  entryComponents: [AddAppDialogComponent, RenameDialogComponent, CutCopyProgressBarComponent, ConfirmDialogComponent, OpenComponent, BasicDialogComponent]
+  entryComponents: [AddAppDialogComponent, RenameDialogComponent, ShareDialogComponent, CutCopyProgressBarComponent, ConfirmDialogComponent, OpenComponent, BasicDialogComponent]
 })
 export class AppModule { }

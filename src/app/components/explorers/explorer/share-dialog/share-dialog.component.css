@@ -1,0 +1,16 @@
+mat-slider {
+    width: 100%;
+}
+
+mat-form-field {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 16px);
+    margin: auto !important;
+}
+
+.duration-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

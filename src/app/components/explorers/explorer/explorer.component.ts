@@ -4,6 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { File } from '../../../interfaces';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { RenameDialogComponent } from './rename-dialog/rename-dialog.component';
+import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 import { switchMap } from 'rxjs/operators';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 import { OpenComponent } from './open/open.component';
@@ -125,8 +126,8 @@ export class ExplorerComponent implements OnInit {
         } else if (fileType === 'audio' || fileType === 'video' || fileType === 'image' || fileType === 'other') {
             const wantedToken: WantedToken = {
                 sharedfor: "opening",
-                url:       file.path,
-                lifespan:  1,
+                url: file.path,
+                lifespan: 1,
             }
             this.fileService.getShareToken(wantedToken).subscribe(data => {
                 // tslint:disable-next-line:max-line-length
@@ -168,15 +169,32 @@ export class ExplorerComponent implements OnInit {
         this.cutCopyFile = undefined;
     }
 
-    download(file: File, share: boolean) {
+    download(file: File) {
         const wantedToken: WantedToken = {
             sharedfor: "downloading",
-            url:       file.path,
-            lifespan:  7,
+            url: file.path,
+            lifespan: 1,
         }
         this.fileService.getShareToken(wantedToken).subscribe(data => {
             const shareURL = `${environment.host}${file.path}?token=${data}`;
-            if (share) {
+            const link = document.createElement('a');
+            link.href = shareURL;
+            document.body.appendChild(link); // required in FF, optional for Chrome
+            link.click();
+        }
+        );
+    }
+
+    openShare(file: File) {
+        const dialogRef = this.dialog.open(ShareDialogComponent);
+        dialogRef.afterClosed().subscribe(data => {
+            const wantedToken: WantedToken = {
+                sharedfor: data.sharedfor,
+                url: file.path,
+                lifespan: data.lifespan,
+            };
+            this.fileService.getShareToken(wantedToken).subscribe(data => {
+                const shareURL = `${environment.host}${file.path}?token=${data}`;
                 this.dialog.open(BasicDialogComponent, {
                     data: {
                         message: 'The file will be available with the following link for 7 days :',
@@ -186,13 +204,9 @@ export class ExplorerComponent implements OnInit {
                         }
                     }
                 });
-            } else {
-                const link = document.createElement('a');
-                link.href = shareURL;
-                document.body.appendChild(link); // required in FF, optional for Chrome
-                link.click();
-            }
-        });
+            });
+        }
+        );
     }
 
     delete(file: File) {

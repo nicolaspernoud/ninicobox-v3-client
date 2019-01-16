@@ -9,11 +9,13 @@ Close dialog;Fermer
 Confirm;Confirmation
 Copy;Copier
 Cut;Couper
+day;jour
 Delete;Supprimer
 Dismiss;OK
 Display in iframe;Afficher dans une iframe
 Displayed path in iframe;Chemin affiché dans l'iframe
 Download;Télécharger
+Duration;Durée
 Edit;Éditer
 Explorer;Explorateur
 Extended sessions;Sessions longues
@@ -31,6 +33,7 @@ Password;Mot de passe
 Please allow geolocation to login;Merci d'activer la géolocalisation pour vous connecter
 Proxy service;Service proxy
 Proxy to;Url de destination
+Recipient;Destinataire
 Rename;Renommer
 Save;Enregistrer
 Secured by JWT;Sécurisé par JWT
@@ -48,4 +51,5 @@ Update available;Nouvelle version disponible
 Update;Mettre à jour
 Upload;Télécharger
 Users management;Gestion des utilisateurs
+Validate;Valider
 Yes;Oui
