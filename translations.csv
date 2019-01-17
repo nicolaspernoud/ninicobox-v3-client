@@ -1,3 +1,4 @@
+ day; jour
  done; : effectué
 Add/Edit service;Ajouter/Éditer un service
 Allowed roles;Rôles autorisés
@@ -45,7 +46,7 @@ Session expired, please login.;Session terminée, veuillez vous reconnecter.
 Share;Partager
 Show fullscreen;Plein écran
 Surname;Nom
-The file will be available with the following link for 7 days :;Le fichier sera accessible pendant 7 jours avec le lien suivant :
+The file will be available with the following link for ;Le fichier sera accessible avec le lien suivant pendant 
 Toggle theme;Changer les couleurs
 Update available;Nouvelle version disponible
 Update;Mettre à jour
