@@ -57,10 +57,10 @@
         <mat-icon>note_add</mat-icon>
     </button>
     <app-file-uploader [path]="currentPath" (UploadComplete)="onUploadComplete($event)" [basePath]="basePath" *ngIf="permissions=='rw'"></app-file-uploader>
-    <button mat-mini-fab (click)="paste()" *ngIf="cutCopyFile !== undefined" [@appear]>
+    <button mat-mini-fab (click)="paste()" *ngIf="cutCopyFile !== undefined" [@appear] [@disappear]>
         <mat-icon>content_paste</mat-icon>
     </button>
-    <button mat-mini-fab (click)="cutCopyFile = undefined" *ngIf="cutCopyFile !== undefined" [@appear]>
+    <button mat-mini-fab (click)="cutCopyFile = undefined" *ngIf="cutCopyFile !== undefined" [@appear] [@disappear]>
         <mat-icon>cancel</mat-icon>
     </button>
 </div>

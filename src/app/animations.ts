@@ -1,4 +1,4 @@
-import { trigger, transition, style, animate, state, query } from '@angular/animations';
+import { trigger, transition, style, animate, query } from '@angular/animations';
 
 export const appAnimations = [
     trigger(
@@ -6,7 +6,11 @@ export const appAnimations = [
             transition(':enter', [
                 style({ transform: 'scale(0)', opacity: 0 }),
                 animate('200ms', style({ transform: 'scale(1)', opacity: 1 }))
-            ]),
+            ])
+        ]
+    ),
+    trigger(
+        'disappear', [
             transition(':leave', [
                 style({ transform: 'scale(1)', opacity: 1 }),
                 animate('200ms', style({ transform: 'scale(0)', opacity: 0 }))
