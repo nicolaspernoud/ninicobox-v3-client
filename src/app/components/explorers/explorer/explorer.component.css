@@ -7,10 +7,6 @@ mat-spinner {
     margin: auto;
 }
 
-.actions-fabs {
-    margin-top: 10px;
-}
-
 .bouncing {
     overflow: visible !important;
     animation-name: bounce;

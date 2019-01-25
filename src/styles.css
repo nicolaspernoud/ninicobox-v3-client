@@ -41,10 +41,13 @@ mat-expansion-panel {
     margin-bottom: 10px !important;
 }
 
-.mat-mini-fab,
 .mat-raised-button,
 mat-form-field {
     margin: 0px 5px 0px 5px !important;
+}
+
+.mat-mini-fab {
+    margin: 5px !important;
 }
 
 .mat-drawer-inner-container {
