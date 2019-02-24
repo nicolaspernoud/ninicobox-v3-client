@@ -98,7 +98,7 @@ export class FilesService {
 
     getShareToken(wantedToken: WantedToken): Observable<string> {
         // tslint:disable-next-line:max-line-length
-        return this.http.post(`${environment.apiEndPoint}/common/getsharetoken`, wantedToken, { responseType: 'text' });
+        return this.http.post(`${environment.apiEndPoint}/common/getsharetoken`, wantedToken, { responseType: 'text', withCredentials: true });
     }
 
     delete(path, isDir) {

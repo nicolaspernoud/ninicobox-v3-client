@@ -56,7 +56,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ninicobox-client:build"
+            "browserTarget": "ninicobox-client:build",
+            "port": 4443,
+            "host": "box.127.0.0.1.nip.io"
           },
           "configurations": {
             "production": {

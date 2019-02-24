@@ -34,22 +34,17 @@ export class AppsService {
   }
 
   setIFrameUrl(app: ClientApp) {
-    let url = `https://${app.host}${environment.port ? ':' + environment.port : ''}/${app.iframepath}`;
+    const url = `https://${app.host}${environment.port ? ':' + environment.port : ''}/${app.iframepath}`;
+    app.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     if (app.secured) {
       const wantedToken: WantedToken = {
         sharedfor: app.name,
         url: app.host,
         lifespan: 1
-      }
-      this.fileService.getShareToken(wantedToken).subscribe(data => {
-        url += `?token=${data}`;
-        app.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-      })
-    } else {
-      app.completeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      };
+      this.fileService.getShareToken(wantedToken).subscribe();
     }
   }
-
 }
 
 export interface ClientApp extends App {

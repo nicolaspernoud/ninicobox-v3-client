@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 const scheme = 'https';
-const hostname = 'localhost';
+const hostname = 'box.127.0.0.1.nip.io';
 const port = '2443';
 const host = `${scheme}://${hostname}:${port}`;
 const apiRoute = '/api';
