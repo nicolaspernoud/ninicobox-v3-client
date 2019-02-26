@@ -10,7 +10,7 @@ export class RouteGuard implements CanActivate {
         private authService: AuthService) { }
 
     canActivate() {
-        if (!this.authService.isTokenExpired()) {
+        if (!this.authService.tokenInfos.isExpired()) {
             return true;
         }
         this.authService.logout();

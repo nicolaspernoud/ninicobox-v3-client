@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://box.127.0.0.1.nip.io:2443",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

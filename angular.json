@@ -58,7 +58,8 @@
           "options": {
             "browserTarget": "ninicobox-client:build",
             "port": 4443,
-            "host": "box.127.0.0.1.nip.io"
+            "host": "box.127.0.0.1.nip.io",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {

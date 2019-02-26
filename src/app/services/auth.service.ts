@@ -9,107 +9,123 @@ import { environment } from '../../environments/environment';
 import { switchMap, catchError } from 'rxjs/operators';
 import { handleHTTPError } from '../utility_functions';
 
-export const TOKEN_NAME = 'jwt_token';
 export const NOT_LOGGED = 'not_logged';
+
+class TokenInfos {
+
+  expirationDate: Date;
+  role: string;
+  XSRFtoken: string;
+
+  constructor() {
+    // tslint:disable-next-line: max-line-length
+    const expDate = localStorage.getItem('token_expiration_date') !== null ? new Date(localStorage.getItem('token_expiration_date')) : undefined;
+    const role = localStorage.getItem('token_role') !== null ? localStorage.getItem('token_role') : 'no_role';
+    const xsrf = localStorage.getItem('token_xsrf') !== null ? localStorage.getItem('token_xsrf') : '';
+    this.expirationDate = expDate;
+    this.role = role;
+    this.XSRFtoken = xsrf;
+  }
+
+  fromJWT(jwt: string) {
+    const decoded = jwt_decode(jwt);
+    this.role = decoded.role;
+    this.XSRFtoken = decoded.csrftoken;
+    if (decoded.exp === undefined) {
+      this.expirationDate = undefined;
+    } else {
+      this.expirationDate = new Date(0);
+      this.expirationDate.setUTCSeconds(decoded.exp);
+    }
+    this.save();
+  }
+
+  save() {
+    localStorage.setItem('token_expiration_date', this.expirationDate.toUTCString());
+    localStorage.setItem('token_role', this.role);
+    localStorage.setItem('token_xsrf', this.XSRFtoken);
+  }
+
+  reset() {
+    localStorage.removeItem('token_expiration_date');
+    localStorage.removeItem('token_role');
+    localStorage.removeItem('token_xsrf');
+    this.expirationDate = undefined;
+    this.role = 'no_role';
+    this.XSRFtoken = '';
+  }
+
+  isExpired(): boolean {
+    if (this.expirationDate === undefined ) {return true; }
+    return this.expirationDate.valueOf() < new Date().valueOf();
+  }
+
+  getRemainingMs(): number {
+    if (this.expirationDate === undefined ) {return 0; }
+    return this.expirationDate.valueOf() - new Date().valueOf();
+  }
+
+}
 
 @Injectable()
 export class AuthService {
 
-    private loginInProgressOrLoggedSource = new BehaviorSubject<boolean>(false);
-    loginInProgressOrLogged = this.loginInProgressOrLoggedSource.asObservable();
+  private loginInProgressOrLoggedSource = new BehaviorSubject<boolean>(false);
+  loginInProgressOrLogged = this.loginInProgressOrLoggedSource.asObservable();
 
-    private userRoleSubject = new BehaviorSubject<string>(NOT_LOGGED);
-    public userRole = this.userRoleSubject.asObservable();
+  private userRoleSubject = new BehaviorSubject<string>(NOT_LOGGED);
+  public userRole = this.userRoleSubject.asObservable();
 
-    private apiEndPoint = `${environment.apiEndPoint}`;
+  private apiEndPoint = `${environment.apiEndPoint}`;
 
-    constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
+  tokenInfos = new TokenInfos();
 
-    hasToken(): boolean {
-        return localStorage.getItem(TOKEN_NAME) !== null;
+  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {
+
+  }
+
+  logout() {
+    this.loginInProgressOrLoggedSource.next(false);
+    this.tokenInfos.reset();
+    this.userRoleSubject.next(NOT_LOGGED);
+    this.router.navigate(['/login']);
+  }
+
+  autoLogin() {
+    if (!this.tokenInfos.isExpired()) {
+      this.userRoleSubject.next(this.tokenInfos.role);
+      this.startSessionTimeout();
     }
+  }
 
-    getToken(): string {
-        return localStorage.getItem(TOKEN_NAME);
+  autoLogout() {
+    if (this.tokenInfos.isExpired()) {
+      this.logout();
     }
+  }
 
-    setToken(token: string): void {
-        localStorage.setItem(TOKEN_NAME, token);
-    }
+  login(user) {
+    this.loginInProgressOrLoggedSource.next(true);
+    return this.http.post(`${this.apiEndPoint}/login`, user, { responseType: 'text' }).subscribe(
+      data => {
+        this.tokenInfos.fromJWT(data);
+        this.userRoleSubject.next(this.tokenInfos.role);
+        this.snackBar.open('Login success', 'OK', { duration: 2000 });
+        this.router.navigate(['/']);
+        this.startSessionTimeout();
+      });
+  }
 
-    getRoleFromToken(token?: string): string {
-        if (!token) { token = this.getToken(); }
-        if (!token) { return 'not_logged'; }
-        const decoded = jwt_decode(token);
-        return decoded.role;
-    }
+  private startSessionTimeout() {
+    timer(this.tokenInfos.getRemainingMs()).subscribe(() => {
+      this.snackBar.open('Session expired, please login.', 'OK', { duration: 2000 });
+      this.logout();
+    });
+  }
 
-    getTokenExpirationDate(token: string): Date {
-        const decoded = jwt_decode(token);
-        if (decoded.exp === undefined) { return null; }
-        const date = new Date(0);
-        date.setUTCSeconds(decoded.exp);
-        return date;
-    }
-
-    isTokenExpired(token?: string): boolean {
-        if (!token) { token = this.getToken(); }
-        if (!token) { return true; }
-        const date = this.getTokenExpirationDate(token);
-        if (date === undefined) { return false; }
-        return !(date.valueOf() > new Date().valueOf());
-    }
-
-    getTokenRemainingMs(): number {
-        const token = this.getToken();
-        if (!token) { return 0; }
-        const date = this.getTokenExpirationDate(token);
-        if (date === undefined) { return 0; }
-        return date.valueOf() - new Date().valueOf();
-    }
-
-    logout() {
-        this.loginInProgressOrLoggedSource.next(false);
-        localStorage.removeItem(TOKEN_NAME);
-        this.userRoleSubject.next(NOT_LOGGED);
-        this.router.navigate(['/login']);
-    }
-
-    autoLogin() {
-        if (!this.isTokenExpired()) {
-            this.userRoleSubject.next(this.getRoleFromToken());
-            this.startSessionTimeout();
-        }
-    }
-
-    autoLogout() {
-        if (this.isTokenExpired()) {
-            this.logout();
-        }
-    }
-
-    login(user) {
-        this.loginInProgressOrLoggedSource.next(true);
-        return this.http.post(`${this.apiEndPoint}/login`, user, { responseType: 'text' }).subscribe(
-            data => {
-                this.setToken(data);
-                this.userRoleSubject.next(this.getRoleFromToken());
-                this.snackBar.open('Login success', 'OK', { duration: 2000 });
-                this.router.navigate(['/']);
-                this.startSessionTimeout();
-            });
-    }
-
-    private startSessionTimeout() {
-        timer(this.getTokenRemainingMs()).subscribe(val => {
-            this.snackBar.open('Session expired, please login.', 'OK', { duration: 2000 });
-            this.logout();
-        });
-    }
-
-    getInfos(): Observable<Infos> {
-        return this.http
-            .get<Infos>(`${this.apiEndPoint}/infos`).pipe(
-                catchError(handleHTTPError));
-    }
+  getInfos(): Observable<Infos> {
+    return this.http
+      .get<Infos>(`${this.apiEndPoint}/infos`).pipe(
+        catchError(handleHTTPError));
+  }
 }

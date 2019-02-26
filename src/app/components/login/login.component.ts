@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(private _authService: AuthService, private location: Location) { }
 
   ngOnInit() {
-    if (!this._authService.isTokenExpired()) {
+    if (!this._authService.tokenInfos.isExpired()) {
       this.location.back();
     }
     this._authService.loginInProgressOrLogged.subscribe(value => this.loginInProgressOrLogged = value);
