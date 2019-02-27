@@ -25,7 +25,7 @@ export class AppsComponent implements OnInit {
       .subscribe(data => {
         this.apps = data;
         this.loading = false;
-        for (let app of this.apps) {
+        for (const app of this.apps) {
           this.appsService.setIFrameUrl(app);
         }
       }, err => {
