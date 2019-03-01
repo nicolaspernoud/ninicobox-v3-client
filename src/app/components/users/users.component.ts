@@ -4,6 +4,7 @@ import { User } from '../../interfaces';
 import { $ } from 'protractor';
 import { switchMap } from 'rxjs/operators';
 import { appAnimations } from '../../animations';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-users',
@@ -16,7 +17,7 @@ export class UsersComponent implements OnInit {
   public users: User[];
   public loading = true;
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.usersService.getUsers().subscribe(data => {
@@ -44,7 +45,10 @@ export class UsersComponent implements OnInit {
     this.usersService.setUsers(this.users).pipe(
       switchMap(
         value => this.usersService.getUsers()
-      )).subscribe(data => this.users);
+      )).subscribe(data => {
+        this.users = data;
+        this.snackBar.open('Users updated', 'OK', { duration: 2000 });
+      });
   }
 
   setRandomPassword(user: User) {
