@@ -31,7 +31,7 @@ export class UsersComponent implements OnInit {
       id: Math.max(...this.users.map(value => value.id)) + 1,
       login: 'newLogin',
       password: randomString(48),
-      role: 'user',
+      role: 'guest',
       longLivedToken: false
     };
     this.users.push(newUser);
