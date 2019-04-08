@@ -1,32 +1,36 @@
 :host {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 object, textarea {
-    height: 60vh;
+  height: 60vh;
 }
 
 .main-content {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .main-content img, .main-content video {
-    max-width: 70vw;
-    max-height: 60vh;
+  max-width: 70vw;
+  max-height: 60vh;
 }
 
 .main-content mat-form-field, .main-content object {
-    width: 70vw;
+  width: 70vw;
 }
 
 .buttons {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: line;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: line;
 }
 
 button {
-    margin-right: 10px;
+  margin-right: 10px;
+}
+
+p {
+  margin-left: 10px;
 }
