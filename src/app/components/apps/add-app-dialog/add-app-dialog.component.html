@@ -11,7 +11,7 @@
   <mat-checkbox #isProxy [(ngModel)]="data.App.isProxy">Proxy service</mat-checkbox>
   <mat-form-field [style.display]="data.App.isProxy ? '' : 'none'">
     <input matInput #forwardTo [value]="data.App.forwardTo">
-    <mat-placeholder><mat-icon>navigation</mat-icon>Proxy to</mat-placeholder>
+    <mat-placeholder><mat-icon>navigation</mat-icon>Proxy to (default : http)</mat-placeholder>
   </mat-form-field>
   <mat-form-field [style.display]="!data.App.isProxy ? '' : 'none'">
     <input matInput #serve [value]="data.App.serve">

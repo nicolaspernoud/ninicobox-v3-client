@@ -76,3 +76,7 @@ router-outlet~* {
     width: 100%;
     z-index: 1;
 }
+
+.mat-dialog-container {
+    min-width: 300px;
+}

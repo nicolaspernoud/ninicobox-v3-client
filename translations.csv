@@ -33,7 +33,7 @@ Operation in progress...;Opération en cours...
 Password;Mot de passe
 Please allow geolocation to login;Merci d'activer la géolocalisation pour vous connecter
 Proxy service;Service proxy
-Proxy to;Url de destination
+Proxy to (default : http);Url de destination (par défaut : http)
 Recipient;Destinataire
 Rename;Renommer
 Save;Enregistrer
