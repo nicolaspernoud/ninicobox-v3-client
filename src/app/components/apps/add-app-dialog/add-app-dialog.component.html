@@ -38,7 +38,7 @@
     <mat-placeholder><mat-icon>sort</mat-icon>Service display rank</mat-placeholder>
   </mat-form-field>
   <mat-checkbox #iFramed [(ngModel)]="data.App.iframed">Display in iframe</mat-checkbox>
-  <mat-form-field>
+  <mat-form-field [style.display]="data.App.iframed ? '' : 'none'">
     <input matInput #iFramePath [value]="data.App.iframepath">
     <mat-placeholder><mat-icon>map</mat-icon>Displayed path in iframe</mat-placeholder>
   </mat-form-field>
