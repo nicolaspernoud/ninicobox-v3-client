@@ -34,7 +34,7 @@ export class AppsService {
   }
 
   setIFrameUrl(app: ClientApp) {
-    let url = `https://${app.host}${environment.port ? ':' + environment.port : ''}/${app.iframepath}`;
+    let url = `https://${app.host.replace("*.","")}${environment.port ? ':' + environment.port : ''}/${app.iframepath}`;
     if (app.secured) {
       const wantedToken: WantedToken = {
         sharedfor: app.name,
