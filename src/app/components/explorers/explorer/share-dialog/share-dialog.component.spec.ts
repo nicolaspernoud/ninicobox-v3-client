@@ -1,4 +1,4 @@
-import { ShareDialogComponent } from './share-dialog.component;
+import { ShareDialogComponent } from './share-dialog.component';
 import { async, TestBed, inject } from '@angular/core/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
