@@ -4,7 +4,7 @@ import { User } from '../../interfaces';
 import { $ } from 'protractor';
 import { switchMap } from 'rxjs/operators';
 import { appAnimations } from '../../animations';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-users',

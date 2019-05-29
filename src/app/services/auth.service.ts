@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import * as jwt_decode from 'jwt-decode';
 import { Observable, BehaviorSubject, timer } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Infos } from '../interfaces';
 import { environment } from '../../environments/environment';

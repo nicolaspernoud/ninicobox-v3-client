@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BasicDialogComponent } from './basic-dialog.component';
 import { MaterialModule } from '../../material.module';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 describe('BasicDialogComponent', () => {
   let component: BasicDialogComponent;
