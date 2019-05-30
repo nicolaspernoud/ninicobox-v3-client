@@ -132,7 +132,7 @@ export class ExplorerComponent implements OnInit {
       };
       this.fileService.getShareToken(wantedToken).subscribe(data => {
         // tslint:disable-next-line:max-line-length
-        const url = this.sanitizer.bypassSecurityTrustResourceUrl(`${environment.host}${file.path}?token=${data}`);
+        const url = this.sanitizer.bypassSecurityTrustResourceUrl(`${environment.host}${file.path}?inline&token=${data}`);
         const dialogRef = this.dialog.open(OpenComponent, {
           data: {
             url: url,
