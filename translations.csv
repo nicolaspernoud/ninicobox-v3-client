@@ -1,5 +1,6 @@
  day; jour
  done; : effectué
+\${t} done;${t} effectué
 Add/Edit service;Ajouter/Éditer un service
 Allowed roles;Rôles autorisés
 App icon;Icone

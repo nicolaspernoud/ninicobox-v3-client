@@ -4,13 +4,15 @@ const path = require('path');
 const translationsFile = fs.readFileSync('./translations.csv', 'utf-8').split('\n');
 const translationsArray = [];
 for (let line of translationsFile) {
+  if (line !== "") {
     const lineArray = line.split(';');
     translationsArray.push(
-        {
-            originalText: lineArray[0],
-            translatedText: lineArray[1]
-        }
+      {
+        originalText: lineArray[0],
+        translatedText: lineArray[1]
+      }
     );
+  }
 }
 
 function translateFiles(dir, done) {
@@ -41,7 +43,8 @@ function translateFiles(dir, done) {
                             if (err) throw err;
                             for (let line of translationsArray) {
                                 data = data.replace(new RegExp(`"${line.originalText}"`, 'g'), `"${line.translatedText}"`)
-                                    .replace(new RegExp(`'${line.originalText}'`, 'g'), `'${line.translatedText}'`);
+                                    .replace(new RegExp(`'${line.originalText}'`, 'g'), `'${line.translatedText}'`)
+                                    .replace(new RegExp(`\`${line.originalText}\``, 'g'), `\`${line.translatedText}\``);
                             }
                             fs.writeFile(file, data, 'utf-8', (err) => {
                                 if (err) throw err;
