@@ -17,7 +17,10 @@ export class TokenInterceptor implements HttpInterceptor {
         if (isRequestToBackend && authService.tokenInfos.XSRFtoken !== '') {
             request = request.clone({
                 setHeaders: {
-                  'X-XSRF-TOKEN': `${authService.tokenInfos.XSRFtoken}`
+                    'X-XSRF-TOKEN': `${authService.tokenInfos.XSRFtoken}`,
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
                 }
             });
         }
