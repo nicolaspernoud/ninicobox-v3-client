@@ -54,6 +54,7 @@ export class AppsComponent implements OnInit {
       const dialogRef = this.dialog.open(AddAppDialogComponent, { data: { App: newApp, RolesList: roles } });
       dialogRef.afterClosed().subscribe(app => {
         if (app) {
+          app.rank = parseInt(app.rank);
           this.appsService.setIFrameUrl(app);
           this.apps.push(app);
           this.apps.sort((a, b) => a.rank - b.rank);
@@ -68,6 +69,7 @@ export class AppsComponent implements OnInit {
       const dialogRef = this.dialog.open(AddAppDialogComponent, { data: { App: app, RolesList: roles } });
       dialogRef.afterClosed().subscribe(data => {
         if (data) {
+          data.rank = parseInt(data.rank);
           const editedApp = this.apps.find(value => value.name === app.name);
           Object.assign(editedApp, data);
           this.appsService.setIFrameUrl(app);
