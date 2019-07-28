@@ -56,4 +56,8 @@ export class AppComponent implements OnInit {
   forceUpdate() {
     this.update.forceUpdate();
   }
+
+  prepareRoute() {
+    return this.router.url;
+  }
 }

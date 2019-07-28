@@ -3,7 +3,6 @@ import { AppsService, ClientApp } from '../../services/apps.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAppDialogComponent } from './add-app-dialog/add-app-dialog.component';
 import { appAnimations } from '../../animations';
-import { AuthService } from '../../services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({

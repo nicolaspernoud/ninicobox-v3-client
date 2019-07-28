@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../interfaces';
-import { $ } from 'protractor';
 import { switchMap } from 'rxjs/operators';
 import { appAnimations } from '../../animations';
 import { MatSnackBar } from '@angular/material/snack-bar';
