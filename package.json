@@ -1,6 +1,6 @@
 {
   "name": "ninicobox-client",
-  "version": "3.1.25",
+  "version": "3.1.26",
   "description": "Client for NinicoBox",
   "repository": {
     "type": "git",
@@ -37,10 +37,10 @@
     "rxjs": "~6.5.2",
     "stream": "0.0.2",
     "timers": "^0.1.1",
-    "zone.js": "^0.9.1"
+    "zone.js": "^0.10.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.800.6",
+    "@angular-devkit/build-angular": "^0.802.0",
     "@angular/cli": "^8.1.1",
     "@angular/compiler-cli": "^8.1.1",
     "@angular/language-service": "^8.1.1",

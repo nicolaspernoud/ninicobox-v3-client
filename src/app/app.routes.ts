@@ -9,24 +9,28 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
+        data: { state: 'login' },
     },
     {
         path: 'explorer',
         component: ExplorersComponent,
         pathMatch: 'full',
-        canActivate: [RouteGuard]
+        canActivate: [RouteGuard],
+        data: { state: 'explorer' },
     },
     {
         path: 'apps',
         component: AppsComponent,
         pathMatch: 'full',
-        canActivate: [RouteGuard]
+        canActivate: [RouteGuard],
+        data: { state: 'apps' },
     },
     {
         path: 'users',
         component: UsersComponent,
         pathMatch: 'full',
-        canActivate: [RouteGuard]
+        canActivate: [RouteGuard],
+        data: { state: 'users' },
     },
     {
         path: '**',

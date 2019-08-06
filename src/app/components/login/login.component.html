@@ -1,4 +1,4 @@
-<div class="vertical-container">
+<div class="vertical-container"  [@appear]>
   <mat-card>
     <form role="form" (submit)="login()">
       <mat-form-field>
@@ -11,7 +11,7 @@
         <mat-placeholder>
           <mat-icon>vpn_key</mat-icon>Password</mat-placeholder>
       </mat-form-field>
-      <button mat-fab color="primary" type="submit" name="action" *ngIf="!loginInProgressOrLogged">
+      <button mat-fab color="primary" type="submit" name="action" *ngIf="!loginInProgressOrLogged" [@appear]>
         <mat-icon>lock_open</mat-icon>
       </button>
       <mat-spinner *ngIf="loginInProgressOrLogged" [diameter]="56"></mat-spinner>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { UpdateService } from './services/update.service';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { appAnimations } from './animations';
 import { Infos } from './interfaces';
 import * as packageJson from '../../package.json';
@@ -55,5 +55,9 @@ export class AppComponent implements OnInit {
 
   forceUpdate() {
     this.update.forceUpdate();
+  }
+
+  getState(outlet: RouterOutlet) {
+    return outlet.activatedRouteData.state;
   }
 }
