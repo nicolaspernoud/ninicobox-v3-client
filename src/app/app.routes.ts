@@ -8,29 +8,25 @@ import { UsersComponent } from './components/users/users.component';
 export const routes: Routes = [
     {
         path: 'login',
-        component: LoginComponent,
-        data: { state: 'login' },
+        component: LoginComponent
     },
     {
         path: 'explorer',
         component: ExplorersComponent,
         pathMatch: 'full',
-        canActivate: [RouteGuard],
-        data: { state: 'explorer' },
+        canActivate: [RouteGuard]
     },
     {
         path: 'apps',
         component: AppsComponent,
         pathMatch: 'full',
-        canActivate: [RouteGuard],
-        data: { state: 'apps' },
+        canActivate: [RouteGuard]
     },
     {
         path: 'users',
         component: UsersComponent,
         pathMatch: 'full',
-        canActivate: [RouteGuard],
-        data: { state: 'users' },
+        canActivate: [RouteGuard]
     },
     {
         path: '**',

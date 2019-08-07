@@ -5,14 +5,13 @@ export const appAnimations = [
         'appear', [
             transition(':enter', [
                 style({ transform: 'scale(0)', opacity: 0 }),
-                animate('200ms', style({ transform: 'scale(1)', opacity: 1 }))
+                animate('200ms')
             ])
         ]
     ),
     trigger(
         'disappear', [
             transition(':leave', [
-                style({ transform: 'scale(1)', opacity: 1 }),
                 animate('200ms', style({ transform: 'scale(0)', opacity: 0 }))
             ])
         ]

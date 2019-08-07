@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
     this.update.forceUpdate();
   }
 
-  getState(outlet: RouterOutlet) {
-    return outlet.activatedRouteData.state;
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet.isActivated ? outlet.activatedRoute : '';
   }
 }

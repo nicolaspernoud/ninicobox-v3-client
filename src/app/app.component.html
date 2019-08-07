@@ -25,7 +25,7 @@
             <mat-icon>exit_to_app</mat-icon>
         </button>
     </mat-toolbar>
-    <main [@routeAnimations]="getState(outlet)">
+    <main [@routeAnimations]="prepareRoute(outlet)">
         <router-outlet #outlet="outlet"></router-outlet>
     </main>
 </mat-sidenav-container>
