@@ -2,6 +2,10 @@
   margin-bottom: 10px;
 }
 
+.mat-raised-button {
+  margin-bottom: 10px !important;
+}
+
 a mat-icon {
   margin-right: 5px;
 }
