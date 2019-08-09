@@ -47,8 +47,8 @@ Session expired, please login.;Session terminée, veuillez vous reconnecter.
 Share;Partager
 Show fullscreen;Plein écran
 Surname;Nom
-The file will be available with the following link for ;Le fichier sera accessible avec le lien suivant pendant 
-The file will be available with the following link for \${n.lifespan} day\${n.lifespan>1\?"s":""} :;Le fichier sera accessible avec le lien suivant pendant ${n.lifespan} jour${n.lifespan>1?"s":""} :
+The file will be available with the following links for ;Le fichier sera accessible avec les liens suivants pendant 
+The file will be available with the following links for \${n.lifespan} day\${n.lifespan>1\?"s":""} :;Le fichier sera accessible avec les liens suivants pendant ${n.lifespan} jour${n.lifespan>1?"s":""} :
 Toggle theme;Changer les couleurs
 Update available;Nouvelle version disponible
 Update;Mettre à jour

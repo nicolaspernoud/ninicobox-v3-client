@@ -206,7 +206,7 @@ export class ExplorerComponent implements OnInit {
         const shareURL = `${environment.host}${file.path}?token=${data}`;
         this.dialog.open(BasicDialogComponent, {
           data: {
-            message: `The file will be available with the following link for ${wantedToken.lifespan} day${wantedToken.lifespan > 1 ? 's' : ''} :`,
+            message: `The file will be available with the following links for ${wantedToken.lifespan} day${wantedToken.lifespan > 1 ? 's' : ''} :`,
             link: {
               caption: file.name,
               href: shareURL
