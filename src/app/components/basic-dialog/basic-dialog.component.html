@@ -2,26 +2,8 @@
 <h2>{{ data.message }}</h2>
 <div class="share-buttons" *ngIf="data.link.href">
   <a mat-raised-button [href]="data.link.href">{{ data.link.caption }}</a>
-  <a
-    mat-raised-button
-    [href]="'https://www.facebook.com/sharer/sharer.php?u=' + data.link.href"
-    ><mat-icon>thumb_up_alt</mat-icon>facebook</a
-  >
-  <a
-    mat-raised-button
-    [href]="
-      'mailto:%20?&subject=' +
-      data.link.caption +
-      '&body=%3Ch2%3E' +
-      data.message +
-      '%3C%2Fh2%3E%3Ca%20href%3D%22' +
-      data.link.href +
-      '%22%3E' +
-      data.link.caption +
-      '%3C%2Fa%3E'
-    "
-    ><mat-icon>email</mat-icon>email</a
-  >
+  <a mat-raised-button [href]="getFacebookShare()"><mat-icon>thumb_up_alt</mat-icon>facebook</a>
+  <a mat-raised-button [href]="getMailTo()"><mat-icon>email</mat-icon>email</a>
 </div>
 <button mat-mini-fab color="accent" (click)="dialogRef.close()">
   <mat-icon>close</mat-icon>
