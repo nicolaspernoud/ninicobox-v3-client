@@ -80,3 +80,7 @@ router-outlet~* {
 .mat-dialog-container {
     min-width: 300px;
 }
+
+.flex-spacer {
+    flex: 1 1 auto;
+}

@@ -11,11 +11,13 @@
     <mat-form-field *ngIf="data.fileType === 'text'">
         <textarea matInput [value]="data.content" [readonly]="!data.editMode"></textarea>
     </mat-form-field>
+    <h1>{{data.file.name}}</h1>
     <div class="buttons">
-        <button mat-raised-button (click)="dialogRef.close()">Close dialog</button>
         <button mat-mini-fab color="primary" (click)="dialogRef.close({value: -1})"><mat-icon>navigate_before</mat-icon></button>
         <button mat-mini-fab color="primary" (click)="dialogRef.close({value: 1})"><mat-icon>navigate_next</mat-icon></button>
-        <p>{{data.file.name}}</p>
+        <button mat-mini-fab color="primary" (click)="openShare(data.file)" *ngIf="data.permissions=='rw'"><mat-icon>share</mat-icon></button>
+        <span class="flex-spacer"></span>
+        <button mat-mini-fab color="accent" (click)="dialogRef.close()"><mat-icon>close</mat-icon></button>
     </div>
 </div>
 

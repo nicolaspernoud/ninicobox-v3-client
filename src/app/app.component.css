@@ -14,10 +14,6 @@
     margin-right: 5px;
 }
 
-.flex-spacer {
-    flex: 1 1 auto;
-}
-
 mat-sidenav {
     width: 250px;
     display: flex;

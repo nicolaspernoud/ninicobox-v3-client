@@ -112,7 +112,8 @@ export class ExplorerComponent implements OnInit {
             content: data,
             file: file,
             fileType: fileType,
-            editMode: editMode
+            editMode: editMode,
+            permissions: this.permissions
           }
         });
         if (editMode) {
@@ -122,6 +123,8 @@ export class ExplorerComponent implements OnInit {
                 .pipe(switchMap(() => this.exploreCurrentDirectory())).subscribe(this.displayFiles());
             }
           });
+        } else {
+          this.goNext(dialogRef, file);
         }
       });
     } else if (fileType === 'audio' || fileType === 'video' || fileType === 'image' || fileType === 'other') {
@@ -138,19 +141,24 @@ export class ExplorerComponent implements OnInit {
             url: url,
             file: file,
             fileType: fileType,
-            editMode: false
+            editMode: false,
+            permissions: this.permissions
           }
         });
-        dialogRef.afterClosed().subscribe(offset => {
-          if (offset && typeof (offset.value) === 'number') {
-            const nextFile = this.files[this.files.indexOf(file) + offset.value];
-            if (nextFile) {
-              this.open(nextFile, false);
-            }
-          }
-        });
+        this.goNext(dialogRef, file);
       });
     }
+  }
+
+  private goNext(dialogRef, file: File) {
+    dialogRef.afterClosed().subscribe(offset => {
+      if (offset && typeof (offset.value) === 'number') {
+        const nextFile = this.files[this.files.indexOf(file) + offset.value];
+        if (nextFile) {
+          this.open(nextFile, false);
+        }
+      }
+    });
   }
 
   cut(file: File) {
