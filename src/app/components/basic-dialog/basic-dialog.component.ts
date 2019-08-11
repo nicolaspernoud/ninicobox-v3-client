@@ -15,11 +15,16 @@ export class BasicDialogComponent implements OnInit {
   }
 
   getFacebookShare() {
-    return `https://www.facebook.com/sharer/sharer.php?u=${location.protocol + "//" + location.hostname + this.data.link.href}`;
+    return `https://www.facebook.com/sharer/sharer.php?u=${location.protocol}//${location.hostname}${this.data.link.href}`;
   }
 
   getMailTo() {
-    return `mailto:%20?&subject=${this.data.link.caption}&body=%3Ch2%3E${this.data.message}%3C%2Fh2%3E%3Ca%20href%3D%22${location.protocol + "//" + location.hostname + this.data.link.href}%22%3E${this.data.link.caption}%3C%2Fa%3E`;
+    return `mailto:somebody?
+    &subject=${this.data.link.caption}
+    &body=
+    <h2>${this.data.message}</h2>
+    <a href="${location.protocol}//${location.hostname}${this.data.link.href}">${this.data.link.caption}</a>
+    `;
   }
 
 }
