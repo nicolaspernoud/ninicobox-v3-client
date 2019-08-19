@@ -153,6 +153,7 @@ export class ExplorerComponent implements OnInit {
         sharedfor: 'external_editing',
         url: file.path,
         lifespan: 1,
+        canwrite: true
       };
       this.fileService.getShareToken(wantedToken).subscribe(data => {
         window.location.href = `https://${this.authService.officeServer}?file=${location.protocol}//${location.hostname}${file.path}&token=${data}`;

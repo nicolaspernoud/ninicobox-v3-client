@@ -146,4 +146,5 @@ export interface WantedToken {
     sharedfor: string;
     url:       string;
     lifespan:  number;
+    canwrite?: boolean;
 }
