@@ -73,6 +73,7 @@ export interface File {
 export interface Infos {
     server_version: string;
     client_version: string;
+    office_server?: string;
     bookmarks?: Bookmark[];
 }
 

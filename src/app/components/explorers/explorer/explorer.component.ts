@@ -13,6 +13,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { BasicDialogComponent } from '../../basic-dialog/basic-dialog.component';
 import { Subscribable } from 'rxjs';
 import { appAnimations } from '../../../animations';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-explorer',
@@ -33,7 +34,7 @@ export class ExplorerComponent implements OnInit {
   cutCopyFile: [File, boolean]; // Boolean is true if operation is a copy, false if it is a cut
 
   // tslint:disable-next-line:max-line-length
-  constructor(private fileService: FilesService, public dialog: MatDialog, public snackBar: MatSnackBar, private sanitizer: DomSanitizer) {
+  constructor(private fileService: FilesService, private authService: AuthService, public dialog: MatDialog, public snackBar: MatSnackBar, private sanitizer: DomSanitizer) {
   }
 
   private exploreCurrentDirectory(): Subscribable<File[]> {
@@ -147,6 +148,15 @@ export class ExplorerComponent implements OnInit {
         });
         this.goNext(dialogRef, file);
       });
+    } else if (fileType === 'document') {
+      const wantedToken: WantedToken = {
+        sharedfor: 'external_editing',
+        url: file.path,
+        lifespan: 1,
+      };
+      this.fileService.getShareToken(wantedToken).subscribe(data => {
+        window.location.href = `https://${this.authService.officeServer}?file=${location.protocol}//${location.hostname}${file.path}&token=${data}`;
+      });
     }
   }
 
@@ -234,6 +244,7 @@ export class ExplorerComponent implements OnInit {
 
   getType(file): string {
     if (/(txt|md|csv|sh|nfo|log|json|yml|srt)$/.test(file.name.toLowerCase())) { return 'text'; }
+    if (/(docx|doc|odt|xlsx|xls|ods|pptx|ppt|opd)$/.test(file.name.toLowerCase())) { return 'document'; }
     if (/(jpg|png|gif|svg|jpeg)$/.test(file.name.toLowerCase())) { return 'image'; }
     if (/(mp3|wav|ogg)$/.test(file.name.toLowerCase())) { return 'audio'; }
     if (/(mp4|avi|mkv|m4v)$/.test(file.name.toLowerCase())) { return 'video'; }

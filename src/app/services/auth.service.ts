@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Infos } from '../interfaces';
 import { environment } from '../../environments/environment';
-import { switchMap, catchError } from 'rxjs/operators';
+import { switchMap, catchError, tap } from 'rxjs/operators';
 import { handleHTTPError } from '../utility_functions';
 
 export const NOT_LOGGED = 'not_logged';
@@ -80,6 +80,8 @@ export class AuthService {
 
   tokenInfos = new TokenInfos();
 
+  officeServer = '';
+
   constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {
 
   }
@@ -126,6 +128,7 @@ export class AuthService {
   getInfos(): Observable<Infos> {
     return this.http
       .get<Infos>(`${this.apiEndPoint}/infos`).pipe(
+        tap(data => {this.officeServer = data.office_server; }),
         catchError(handleHTTPError));
   }
 }
