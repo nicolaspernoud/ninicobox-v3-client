@@ -56,12 +56,12 @@ class TokenInfos {
   }
 
   isExpired(): boolean {
-    if (this.expirationDate === undefined ) {return true; }
+    if (this.expirationDate === undefined) { return true; }
     return this.expirationDate.valueOf() < new Date().valueOf();
   }
 
   getRemainingMs(): number {
-    if (this.expirationDate === undefined ) {return 0; }
+    if (this.expirationDate === undefined) { return 0; }
     return this.expirationDate.valueOf() - new Date().valueOf();
   }
 
@@ -81,6 +81,8 @@ export class AuthService {
   tokenInfos = new TokenInfos();
 
   officeServer = '';
+
+  user = '';
 
   constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {
 
@@ -111,6 +113,7 @@ export class AuthService {
     return this.http.post(`${this.apiEndPoint}/login`, user, { responseType: 'text' }).subscribe(
       data => {
         this.tokenInfos.fromJWT(data);
+        this.user = user.login;
         this.userRoleSubject.next(this.tokenInfos.role);
         this.snackBar.open('Login success', 'OK', { duration: 2000 });
         this.router.navigate(['/']);
@@ -128,7 +131,7 @@ export class AuthService {
   getInfos(): Observable<Infos> {
     return this.http
       .get<Infos>(`${this.apiEndPoint}/infos`).pipe(
-        tap(data => {this.officeServer = data.office_server; }),
+        tap(data => { this.officeServer = data.office_server; }),
         catchError(handleHTTPError));
   }
 }
