@@ -156,7 +156,7 @@ export class ExplorerComponent implements OnInit {
         canwrite: true
       };
       this.fileService.getShareToken(wantedToken).subscribe(data => {
-        window.location.href = `https://${this.authService.officeServer}?file=${location.protocol}//${location.hostname}${file.path}&token=${data}&user=${this.authService.user}`;
+        window.location.href = `https://${this.authService.officeServer}?file=${location.protocol}//${location.hostname}${file.path}&mtime=${file.mtime.toISOString()}&token=${data}&user=${this.authService.user}`;
       });
     }
   }
