@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import * as jwt_decode from 'jwt-decode';
 import { Observable, BehaviorSubject, timer } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Infos } from '../interfaces';
 import { environment } from '../../environments/environment';
-import { switchMap, catchError, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { handleHTTPError } from '../utility_functions';
 
 export const NOT_LOGGED = 'not_logged';
@@ -15,21 +15,25 @@ class TokenInfos {
 
   expirationDate: Date;
   role: string;
+  login: string;
   XSRFtoken: string;
 
   constructor() {
     // tslint:disable-next-line: max-line-length
     const expDate = localStorage.getItem('token_expiration_date') !== null ? new Date(localStorage.getItem('token_expiration_date')) : undefined;
     const role = localStorage.getItem('token_role') !== null ? localStorage.getItem('token_role') : 'no_role';
+    const login = localStorage.getItem('token_login') !== null ? localStorage.getItem('token_login') : '';
     const xsrf = localStorage.getItem('token_xsrf') !== null ? localStorage.getItem('token_xsrf') : '';
     this.expirationDate = expDate;
     this.role = role;
+    this.login = login;
     this.XSRFtoken = xsrf;
   }
 
   fromJWT(jwt: string) {
     const decoded = jwt_decode(jwt);
     this.role = decoded.role;
+    this.login = decoded.login;
     this.XSRFtoken = decoded.csrftoken;
     if (decoded.exp === undefined) {
       this.expirationDate = undefined;
@@ -43,12 +47,14 @@ class TokenInfos {
   save() {
     localStorage.setItem('token_expiration_date', this.expirationDate.toUTCString());
     localStorage.setItem('token_role', this.role);
+    localStorage.setItem('token_login', this.login);
     localStorage.setItem('token_xsrf', this.XSRFtoken);
   }
 
   reset() {
     localStorage.removeItem('token_expiration_date');
     localStorage.removeItem('token_role');
+    localStorage.removeItem('token_login');
     localStorage.removeItem('token_xsrf');
     this.expirationDate = undefined;
     this.role = 'no_role';
@@ -76,13 +82,13 @@ export class AuthService {
   private userRoleSubject = new BehaviorSubject<string>(NOT_LOGGED);
   public userRole = this.userRoleSubject.asObservable();
 
+  public user = '';
+
   private apiEndPoint = `${environment.apiEndPoint}`;
 
   tokenInfos = new TokenInfos();
 
   officeServer = '';
-
-  user = '';
 
   constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {
 
@@ -98,6 +104,7 @@ export class AuthService {
   autoLogin() {
     if (!this.tokenInfos.isExpired()) {
       this.userRoleSubject.next(this.tokenInfos.role);
+      this.user = this.tokenInfos.login;
       this.startSessionTimeout();
     }
   }
@@ -113,8 +120,8 @@ export class AuthService {
     return this.http.post(`${this.apiEndPoint}/login`, user, { responseType: 'text' }).subscribe(
       data => {
         this.tokenInfos.fromJWT(data);
-        this.user = user.login;
         this.userRoleSubject.next(this.tokenInfos.role);
+        this.user = this.tokenInfos.login;
         this.snackBar.open('Login success', 'OK', { duration: 2000 });
         this.router.navigate(['/']);
         this.startSessionTimeout();
