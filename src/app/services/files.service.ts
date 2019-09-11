@@ -73,7 +73,7 @@ export class FilesService {
     }
 
     upload(path, file) {
-        const req = new HttpRequest('PUT', `${this.host}${path}/${file.name}`, file, {
+        const req = new HttpRequest('PUT', `${this.host}${path}/${file.name}?resize=1440`, file, {
             reportProgress: true,
             responseType: 'text'
         });
