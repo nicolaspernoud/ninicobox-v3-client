@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FilesService, UploadProgress } from '../../../../services/files.service';
+import { ImageResizeService } from '../../../../services/image-resize.service';
 
 @Component({
     selector: 'app-file-uploader',
@@ -12,7 +13,7 @@ export class FileUploadComponent implements OnInit {
     @Output() UploadComplete: EventEmitter<void> = new EventEmitter<void>();
     uploads: UploadProgress[] = [];
 
-    constructor(private filesService: FilesService) { }
+    constructor(private filesService: FilesService, private imageResizeService: ImageResizeService) { }
 
     ngOnInit() {
         this.filesService.uploadProgress.subscribe(
@@ -29,20 +30,34 @@ export class FileUploadComponent implements OnInit {
 
     onChange(event) {
         if (event.target.files.length > 0) {
-            for (const file of event.target.files) {
+            const files: File[] = event.target.files;
+            const imageFiles: File[] = [];
+            for (const file of files) {
                 this.uploads.push({
                     filename: file.name,
                     progress: 0
                 });
-                this.filesService.upload(this.path, file).subscribe(
-                    data => {
-                        if (!!this.UploadComplete) {
-                            this.UploadComplete.emit(file.name);
-                            this.uploads.splice(this.uploads.findIndex(element => element.filename === file.filename));
-                        }
-                    },
-                    err => { console.log(err); });
+                // If the file is an image use pica for resizing
+                if (file.type === 'image/jpeg') {
+                    this.imageResizeService.resizeImage(file, 2560, 1440, { aspectRatio: { keepAspectRatio: true } })
+                        .subscribe((imageResized: File) => {
+                            this.upLoadFile(imageResized, file);
+                        }, (err) => {
+                            throw err.err;
+                        });
+                } else { // Else simply upload
+                    this.upLoadFile(file, file);
+                }
             }
         }
+    }
+
+    private upLoadFile(fileToUpload: File, fileToCompare: File) {
+        this.filesService.upload(this.path, fileToUpload).subscribe(() => {
+            if (!!this.UploadComplete) {
+                this.UploadComplete.emit();
+                this.uploads.splice(this.uploads.findIndex(element => element.filename === fileToCompare.name));
+            }
+        }, err => { throw err.err; });
     }
 }
