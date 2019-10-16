@@ -39,24 +39,25 @@ export class FileUploadComponent implements OnInit {
                 });
                 // If the file is an image use pica for resizing
                 if (file.type === 'image/jpeg') {
-                    this.imageResizeService.resizeImage(file, 2560, 1440, { aspectRatio: { keepAspectRatio: true } })
-                        .subscribe((imageResized: File) => {
-                            this.upLoadFile(imageResized, file);
-                        }, (err) => {
-                            throw err.err;
-                        });
+                    imageFiles.push(file);
                 } else { // Else simply upload
-                    this.upLoadFile(file, file);
+                    this.upLoadFile(file);
                 }
             }
+            this.imageResizeService.resizeImages(imageFiles, 2560, 1440, { aspectRatio: { keepAspectRatio: true } })
+                .subscribe((imageResized: File) => {
+                    this.upLoadFile(imageResized);
+                }, (err) => {
+                    throw err.err;
+                });
         }
     }
 
-    private upLoadFile(fileToUpload: File, fileToCompare: File) {
-        this.filesService.upload(this.path, fileToUpload).subscribe(() => {
+    private upLoadFile(file: File) {
+        this.filesService.upload(this.path, file).subscribe(() => {
             if (!!this.UploadComplete) {
                 this.UploadComplete.emit();
-                this.uploads.splice(this.uploads.findIndex(element => element.filename === fileToCompare.name));
+                this.uploads.splice(this.uploads.findIndex(element => element.filename === file.name), 1);
             }
         }, err => { throw err.err; });
     }

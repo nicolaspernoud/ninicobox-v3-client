@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 import Pica from 'pica';
-import { NgxPicaResizeOptionsInterface, NgxPicaErrorType } from './image-resize.interfaces';
+import { NgxPicaResizeOptionsInterface, NgxPicaErrorType, NgxPicaErrorInterface } from './image-resize.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,49 @@ export class ImageResizeService {
   private picaResizer = new Pica();
 
   constructor() { }
+
+  public resizeImages(files: File[], width: number, height: number, options?: NgxPicaResizeOptionsInterface): Observable<File> {
+    const resizedImage: Subject<File> = new Subject();
+    const totalFiles: number = files.length;
+
+    if (totalFiles > 0) {
+      const nextFile: Subject<File> = new Subject();
+      let index = 0;
+
+      const subscription: Subscription = nextFile.subscribe((file: File) => {
+        this.resizeImage(file, width, height, options).subscribe(imageResized => {
+          index++;
+          resizedImage.next(imageResized);
+
+          if (index < totalFiles) {
+            nextFile.next(files[index]);
+
+          } else {
+            resizedImage.complete();
+            subscription.unsubscribe();
+          }
+        }, (err) => {
+          const ngxPicaError: NgxPicaErrorInterface = {
+            file: file,
+            err: err
+          };
+
+          resizedImage.error(ngxPicaError);
+        });
+      });
+
+      nextFile.next(files[index]);
+    } else {
+      const ngxPicaError: NgxPicaErrorInterface = {
+        err: NgxPicaErrorType.NO_FILES_RECEIVED
+      };
+
+      resizedImage.error(ngxPicaError);
+      resizedImage.complete();
+    }
+
+    return resizedImage.asObservable();
+  }
 
   public resizeImage(file: File, width: number, height: number, options?: NgxPicaResizeOptionsInterface): Observable<File> {
     const resizedImage: Subject<File> = new Subject();
