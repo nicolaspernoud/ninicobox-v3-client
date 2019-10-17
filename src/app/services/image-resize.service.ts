@@ -8,6 +8,9 @@ import { NgxPicaResizeOptionsInterface, NgxPicaErrorType, NgxPicaErrorInterface 
 })
 export class ImageResizeService {
   private picaResizer = new Pica();
+  private originCanvas: HTMLCanvasElement  =  document.createElement('canvas');
+  private ctx: CanvasRenderingContext2D  = this.originCanvas.getContext('2d');
+  private destinationCanvas: HTMLCanvasElement  = document.createElement('canvas');
 
   constructor() { }
 
@@ -56,23 +59,21 @@ export class ImageResizeService {
 
   public resizeImage(file: File, width: number, height: number, options?: NgxPicaResizeOptionsInterface): Observable<File> {
     const resizedImage: Subject<File> = new Subject();
-    const originCanvas: HTMLCanvasElement = document.createElement('canvas');
-    const ctx = originCanvas.getContext('2d');
     const img = new Image();
 
-    if (ctx) {
+    if (this.ctx) {
       img.onerror = (err) => {
         resizedImage.error({ err: NgxPicaErrorType.READ_ERROR, file: file, original_error: err });
       };
 
       img.onload = () => {
         window.URL.revokeObjectURL(img.src);
-        originCanvas.width = img.width;
-        originCanvas.height = img.height;
+        this.originCanvas.width = img.width;
+        this.originCanvas.height = img.height;
 
-        ctx.drawImage(img, 0, 0);
+        this.ctx.drawImage(img, 0, 0);
 
-        const imageData = ctx.getImageData(0, 0, img.width, img.height);
+        const imageData = this.ctx.getImageData(0, 0, img.width, img.height);
         if (options && options.aspectRatio && options.aspectRatio.keepAspectRatio) {
           let ratio = 0;
 
@@ -86,11 +87,10 @@ export class ImageResizeService {
           height = Math.round(imageData.height * ratio);
         }
 
-        const destinationCanvas: HTMLCanvasElement = document.createElement('canvas');
-        destinationCanvas.width = width;
-        destinationCanvas.height = height;
+        this.destinationCanvas.width = width;
+        this.destinationCanvas.height = height;
 
-        this.picaResize(file, originCanvas, destinationCanvas, options)
+        this.picaResize(file, this.originCanvas, this.destinationCanvas, options)
           .catch((err) => resizedImage.error(err))
           .then((imgResized: File) => {
             resizedImage.next(imgResized);
@@ -103,7 +103,7 @@ export class ImageResizeService {
     return resizedImage.asObservable();
   }
 
-  private async picaResize(file: File, from: HTMLCanvasElement, to: HTMLCanvasElement, options: any): Promise<File> {
+  private picaResize(file: File, from: HTMLCanvasElement, to: HTMLCanvasElement, options: any): Promise<File> {
     return new Promise<File>((resolve, reject) => {
       this.picaResizer.resize(from, to, options)
         .catch((err) => reject(err))
