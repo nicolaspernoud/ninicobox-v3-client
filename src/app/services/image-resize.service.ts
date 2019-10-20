@@ -7,120 +7,51 @@ import { NgxPicaResizeOptionsInterface, NgxPicaErrorType, NgxPicaErrorInterface 
   providedIn: 'root'
 })
 export class ImageResizeService {
+
   private picaResizer = new Pica();
-  private originCanvas: HTMLCanvasElement  =  document.createElement('canvas');
-  private ctx: CanvasRenderingContext2D  = this.originCanvas.getContext('2d');
-  private destinationCanvas: HTMLCanvasElement  = document.createElement('canvas');
+  private originCanvas = document.createElement('canvas');
+  private ctx = this.originCanvas.getContext('2d');
+  private destinationCanvas = document.createElement('canvas');
 
   constructor() { }
 
-  public resizeImages(files: File[], width: number, height: number, options?: NgxPicaResizeOptionsInterface): Observable<File> {
-    const resizedImage: Subject<File> = new Subject();
-    const totalFiles: number = files.length;
-
-    if (totalFiles > 0) {
-      const nextFile: Subject<File> = new Subject();
-      let index = 0;
-
-      const subscription: Subscription = nextFile.subscribe((file: File) => {
-        this.resizeImage(file, width, height, options).subscribe(imageResized => {
-          index++;
-          resizedImage.next(imageResized);
-
-          if (index < totalFiles) {
-            nextFile.next(files[index]);
-
-          } else {
-            resizedImage.complete();
-            subscription.unsubscribe();
-          }
-        }, (err) => {
-          const ngxPicaError: NgxPicaErrorInterface = {
-            file: file,
-            err: err
-          };
-
-          resizedImage.error(ngxPicaError);
-        });
-      });
-
-      nextFile.next(files[index]);
-    } else {
-      const ngxPicaError: NgxPicaErrorInterface = {
-        err: NgxPicaErrorType.NO_FILES_RECEIVED
-      };
-
-      resizedImage.error(ngxPicaError);
-      resizedImage.complete();
-    }
-
-    return resizedImage.asObservable();
-  }
-
-  public resizeImage(file: File, width: number, height: number, options?: NgxPicaResizeOptionsInterface): Observable<File> {
-    const resizedImage: Subject<File> = new Subject();
+  public async resizeImage(file: File, width: number, height: number, options?: NgxPicaResizeOptionsInterface): Promise<File> {
     const img = new Image();
+    let imgpromise = onload2promise(img);
+    img.src = window.URL.createObjectURL(file);
+    await imgpromise;
 
-    if (this.ctx) {
-      img.onerror = (err) => {
-        resizedImage.error({ err: NgxPicaErrorType.READ_ERROR, file: file, original_error: err });
-      };
+    this.originCanvas.width = img.width;
+    this.originCanvas.height = img.height;
 
-      img.onload = () => {
-        window.URL.revokeObjectURL(img.src);
-        this.originCanvas.width = img.width;
-        this.originCanvas.height = img.height;
+    this.ctx.drawImage(img, 0, 0);
 
-        this.ctx.drawImage(img, 0, 0);
+    const imageData = this.ctx.getImageData(0, 0, img.width, img.height);
+    if (options && options.aspectRatio && options.aspectRatio.keepAspectRatio) {
+      let ratio = 0;
 
-        const imageData = this.ctx.getImageData(0, 0, img.width, img.height);
-        if (options && options.aspectRatio && options.aspectRatio.keepAspectRatio) {
-          let ratio = 0;
+      if (options.aspectRatio.forceMinDimensions) {
+        ratio = Math.max(width / imageData.width, height / imageData.height);
+      } else {
+        ratio = Math.min(width / imageData.width, height / imageData.height);
+      }
 
-          if (options.aspectRatio.forceMinDimensions) {
-            ratio = Math.max(width / imageData.width, height / imageData.height);
-          } else {
-            ratio = Math.min(width / imageData.width, height / imageData.height);
-          }
-
-          width = Math.round(imageData.width * ratio);
-          height = Math.round(imageData.height * ratio);
-        }
-
-        this.destinationCanvas.width = width;
-        this.destinationCanvas.height = height;
-
-        this.picaResize(file, this.originCanvas, this.destinationCanvas, options)
-          .catch((err) => resizedImage.error(err))
-          .then((imgResized: File) => {
-            resizedImage.next(imgResized);
-          });
-      };
-      img.src = window.URL.createObjectURL(file);
-    } else {
-      resizedImage.error(NgxPicaErrorType.CANVAS_CONTEXT_IDENTIFIER_NOT_SUPPORTED);
+      width = Math.round(imageData.width * ratio);
+      height = Math.round(imageData.height * ratio);
     }
-    return resizedImage.asObservable();
-  }
 
-  private picaResize(file: File, from: HTMLCanvasElement, to: HTMLCanvasElement, options: any): Promise<File> {
-    return new Promise<File>((resolve, reject) => {
-      this.picaResizer.resize(from, to, options)
-        .catch((err) => reject(err))
-        .then((resizedCanvas: HTMLCanvasElement) => {
-          this.picaResizer.toBlob(resizedCanvas, file.type)
-            .then((blob: Blob) => {
-              retrieveExif(file)
-                .then(exif => {
-                  const fileResized = new File([blob.slice(0, 2), exif, blob.slice(2)], file.name, {
-                    type: file.type,
-                    lastModified: new Date().getTime()
-                  });
-                  resolve(fileResized);
-                });
-            });
-        });
+    this.destinationCanvas.width = width;
+    this.destinationCanvas.height = height;
+
+    const resizedCanvas: HTMLCanvasElement = await this.picaResizer.resize(this.originCanvas, this.destinationCanvas, options);
+    const blob: Blob = await this.picaResizer.toBlob(resizedCanvas, file.type);
+    const exif = await retrieveExif(file);
+    const fileResized = new File([blob.slice(0, 2), exif, blob.slice(2)], file.name, {
+      type: file.type,
+      lastModified: new Date().getTime()
     });
+    window.URL.revokeObjectURL(img.src);
+    return fileResized;
   }
 }
 
@@ -152,5 +83,17 @@ function retrieveExif(blob: File): Promise<BlobPart> {
       return resolve(new Blob());
     });
     reader.readAsArrayBuffer(blob);
+  });
+}
+
+interface OnLoadAble {
+  onload: any;
+  onerror: any;
+}
+
+function onload2promise<T extends OnLoadAble>(obj: T): Promise<T> {
+  return new Promise((resolve, reject) => {
+    obj.onload = () => resolve(obj);
+    obj.onerror = reject;
   });
 }

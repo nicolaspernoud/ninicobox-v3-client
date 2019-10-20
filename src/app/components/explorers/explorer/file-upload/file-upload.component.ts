@@ -28,7 +28,7 @@ export class FileUploadComponent implements OnInit {
         );
     }
 
-    onChange(event) {
+    async onChange(event) {
         if (event.target.files.length > 0) {
             const files: File[] = event.target.files;
             const imageFiles: File[] = [];
@@ -39,17 +39,12 @@ export class FileUploadComponent implements OnInit {
                 });
                 // If the file is an image use pica for resizing
                 if (file.type === 'image/jpeg') {
-                    imageFiles.push(file);
+                    const newFile = await this.imageResizeService.resizeImage(file, 2560, 1440, { aspectRatio: { keepAspectRatio: true } });
+                    this.upLoadFile(newFile);
                 } else { // Else simply upload
                     this.upLoadFile(file);
                 }
             }
-            this.imageResizeService.resizeImages(imageFiles, 2560, 1440, { aspectRatio: { keepAspectRatio: true } })
-                .subscribe((imageResized: File) => {
-                    this.upLoadFile(imageResized);
-                }, (err) => {
-                    throw err.err;
-                });
         }
     }
 
