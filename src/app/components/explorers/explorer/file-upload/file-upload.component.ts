@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FilesService, UploadProgress } from '../../../../services/files.service';
-import { ImageResizeService } from '../../../../services/image-resize.service';
 
 @Component({
     selector: 'app-file-uploader',
@@ -13,7 +12,7 @@ export class FileUploadComponent implements OnInit {
     @Output() UploadComplete: EventEmitter<void> = new EventEmitter<void>();
     uploads: UploadProgress[] = [];
 
-    constructor(private filesService: FilesService, private imageResizeService: ImageResizeService) { }
+    constructor(private filesService: FilesService) { }
 
     ngOnInit() {
         this.filesService.uploadProgress.subscribe(
@@ -31,25 +30,13 @@ export class FileUploadComponent implements OnInit {
     onChange(event) {
         if (event.target.files.length > 0) {
             const files: File[] = event.target.files;
-            const imageFiles: File[] = [];
             for (const file of files) {
                 this.uploads.push({
                     filename: file.name,
                     progress: 0
                 });
-                // If the file is an image use pica for resizing
-                if (file.type === 'image/jpeg') {
-                    imageFiles.push(file);
-                } else { // Else simply upload
-                    this.upLoadFile(file);
-                }
+                this.upLoadFile(file);
             }
-            this.imageResizeService.resizeImages(imageFiles, 2560, 1440, { aspectRatio: { keepAspectRatio: true } })
-                .subscribe((imageResized: File) => {
-                    this.upLoadFile(imageResized);
-                }, (err) => {
-                    throw err.err;
-                });
         }
     }
 
